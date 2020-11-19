@@ -1,9 +1,10 @@
 import React from "react";
-import { withRouter } from "react-router";
+import { useHistory } from "react-router-dom";
 
-const AskDetails = (props) => {
+const AskDetails = () => {
+	const history = useHistory();
 	const onButtonClick = () => {
-		props.history.push("/chat");
+		history.push("/chat");
 	};
 	return (
 		<div>
@@ -14,4 +15,4 @@ const AskDetails = (props) => {
 	);
 };
 
-export default withRouter(AskDetails);
+export default AskDetails;
