@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 
 import Header from "./header/Header";
-import Home from "./Home";
+import Home from "./home/Home";
 import AskList from "./ask/AskList";
 import Footer from "./Footer";
 import LogIn from "./LogIn";
