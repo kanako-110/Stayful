@@ -47,7 +47,7 @@ const WRAPPER = styled.span`
 `;
 
 const INNER = styled.div`
-	padding: 50px 60px;
+	padding: 90px 60px;
 	display: flex;
 `;
 
@@ -60,7 +60,7 @@ const P3 = styled.p`
 export default function FirstView(props) {
 	return (
 		<div style={{ height: "100vh" }}>
-			<div style={{ paddingLeft: "4%", paddingRight: "1%" }}>
+			<div style={{ paddingLeft: "4%", paddingRight: "2%" }}>
 				<EYE_CATCH>
 					<H3>
 						24時間いつでも相談

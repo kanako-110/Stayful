@@ -1,0 +1,7 @@
+/* 全体の共通のcss */
+@import url("https://fonts.googleapis.com/css2?family=Questrial&display=swap");
+
+.ENTIRE_DIV {
+	padding-left: 5%;
+	padding-right: 2%;
+}
