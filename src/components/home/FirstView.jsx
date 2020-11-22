@@ -43,18 +43,26 @@ const CONTAINER = styled.div`
 
 const WRAPPER = styled.span`
 	display: flex;
-	justify-content: center;
-`;
+	justify-content: space-between;
+	width: 100%;
+	height: 100%;
+	padding: 0% 10%;
+	box-sizing: border-box
+	`;
 
 const INNER = styled.div`
-	padding: 50px 60px;
+	// padding: 6% 10%;
 	display: flex;
+	text-align: center;
+	width: 25%;
+	align-items: center;
 `;
 
 const P3 = styled.p`
 	font-size: 2rem;
 	font-weight: bold;
 	padding-top: 5px;
+	display: inline-block;
 `;
 
 export default function FirstView(props) {
@@ -88,21 +96,23 @@ export default function FirstView(props) {
 			<CONTAINER>
 				<WRAPPER>
 					<INNER>
-						<PermIdentityIcon style={{ fontSize: 60 }} />
+						<div>
+							<PermIdentityIcon style={{ fontSize: 70 }} />
+						</div>
 						<div>
 							<p>ユーザー数</p>
 							<P3>20,000人</P3>　
 						</div>
 					</INNER>
 					<INNER>
-						<PermContactCalendarIcon style={{ fontSize: 60 }} />
+						<PermContactCalendarIcon style={{ fontSize: 70 }} />
 						<div>
 							<p>Helper数</p>
 							<P3>700人</P3>
 						</div>
 					</INNER>
 					<INNER>
-						<EmojiObjectsIcon style={{ fontSize: 60 }} />
+						<EmojiObjectsIcon style={{ fontSize: 70 }} />
 						<div>
 							<p>解決数</p>
 							<P3>400件</P3>
