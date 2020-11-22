@@ -25,7 +25,7 @@ const App = () => {
 				{/* 1つのコンポーネントのみ返すように設定 */}
 				<div
 					style={{
-						paddingLeft: "4%",
+						paddingLeft: "5%",
 						paddingRight: "2%",
 						boxSizing: "border - box",
 					}}
