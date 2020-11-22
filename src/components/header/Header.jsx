@@ -11,7 +11,7 @@ import {
 const useStyles = makeStyles(() => ({
 	header: {
 		backgroundColor: "#ffffff",
-		paddingRight: "4%",
+		paddingRight: "2%",
 		paddingLeft: "1%",
 		height: "10vh",
 	},

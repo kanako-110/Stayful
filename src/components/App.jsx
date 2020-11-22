@@ -23,13 +23,7 @@ const App = () => {
 			<Switch>
 				{/* <Box paddingLeft="4%" paddingRight="1%" width="100%" boxSizing= "border-box"> */}
 				{/* 1つのコンポーネントのみ返すように設定 */}
-				<div
-					style={{
-						paddingLeft: "5%",
-						paddingRight: "2%",
-						boxSizing: "border - box",
-					}}
-				>
+				<div>
 					<Route path="/" exact component={Home} />
 					<Route path="/asklist" exact component={AskList} />
 					<Route path="/login" exact component={LogIn} />
