@@ -1,8 +1,7 @@
 import React from "react";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
-
 import Header from "./header/Header";
-import Home from "./home/Home";
+import Home from "./home";
 import AskList from "./ask/AskList";
 import Footer from "./Footer";
 import LogIn from "./LogIn";
@@ -15,15 +14,22 @@ import About from "./About";
 import EditAsk from "./ask/EditAsk";
 import PostAsk from "./ask/PostAsk";
 import AskDetails from "./ask/AskDetails";
+import AboutHelper from "./AboutHelper";
 
 const App = () => {
 	return (
-		<div>
-			<Router>
-				<Header />
-				<Switch>
-					{" "}
-					{/* 1つのコンポーネントのみ返すように設定 */}
+		<Router>
+			<Header />
+			<Switch>
+				{/* <Box paddingLeft="4%" paddingRight="1%" width="100%" boxSizing= "border-box"> */}
+				{/* 1つのコンポーネントのみ返すように設定 */}
+				<div
+					style={{
+						paddingLeft: "4%",
+						paddingRight: "2%",
+						boxSizing: "border - box",
+					}}
+				>
 					<Route path="/" exact component={Home} />
 					<Route path="/asklist" exact component={AskList} />
 					<Route path="/login" exact component={LogIn} />
@@ -36,10 +42,12 @@ const App = () => {
 					<Route path="/editask" exact component={EditAsk} />
 					<Route path="/postask" exact component={PostAsk} />
 					<Route path="/askdetails/:id" exact component={AskDetails} />
-				</Switch>
-				<Footer />
-			</Router>
-		</div>
+					<Route path="/abouthelper" exact component={AboutHelper} />
+					{/* </Box> */}
+				</div>
+			</Switch>
+			<Footer />
+		</Router>
 	);
 };
 
