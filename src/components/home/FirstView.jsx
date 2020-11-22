@@ -37,7 +37,7 @@ const P2 = styled.p`
 
 const CONTAINER = styled.div`
 	background-color: #ffdead;
-	height: 18.5vh;
+	height: 26%;
 	width: 100vw;
 	position: relative;
 	left: 50%;
@@ -47,13 +47,13 @@ const CONTAINER = styled.div`
 	box-sizing: border-box;
 `;
 
-const INNER = styled.span`
+const WRAPPER = styled.span`
 	display: flex;
 	justify-content: center;
 `;
 
-const WRAPPER = styled.div`
-	padding: 45px 60px;
+const INNER = styled.div`
+	padding: 70px 60px;
 	display: flex;
 `;
 
@@ -65,7 +65,7 @@ const P3 = styled.p`
 
 export default function FirstView() {
 	return (
-		<div>
+		<div style={{height: "100vh"}}>
 			<EYE_CATCH>
 				<H3>
 					24時間いつでも相談
@@ -84,35 +84,35 @@ export default function FirstView() {
 			</P>
 
 			<Button text="今すぐ相談する" link="/asklist" top="53%" />
-			
+
 			<Link to="/aboutHelper" style={{ color: "#333333" }}>
 				<P2>Helperとして登録したい方はコチラ</P2>
 			</Link>
 
 			<CONTAINER>
-				<INNER>
-					<WRAPPER>
+				<WRAPPER>
+					<INNER>
 						<PermIdentityIcon style={{ fontSize: 60 }} />
 						<div>
 							<p>ユーザー数</p>
 							<P3>20,000人</P3>　
 						</div>
-					</WRAPPER>
-					<WRAPPER>
+					</INNER>
+					<INNER>
 						<PermContactCalendarIcon style={{ fontSize: 60 }} />
 						<div>
 							<p>Helper数</p>
 							<P3>700人</P3>
 						</div>
-					</WRAPPER>
-					<WRAPPER>
+					</INNER>
+					<INNER>
 						<EmojiObjectsIcon style={{ fontSize: 60 }} />
 						<div>
 							<p>解決数</p>
 							<P3>400件</P3>
 						</div>
-					</WRAPPER>
-				</INNER>
+					</INNER>
+				</WRAPPER>
 			</CONTAINER>
 		</div>
 	);

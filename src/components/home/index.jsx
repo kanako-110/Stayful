@@ -1,13 +1,13 @@
 import React from "react";
 import { Box } from "@material-ui/core";
 import FirstView from "./FirstView";
+import SellsPoint from "./SellsPoint";
 
 const Home = () => {
 	return (
 		<>
-			<Box height="90vh">
-				<FirstView />
-			</Box>
+			<FirstView />
+			<SellsPoint />
 		</>
 	);
 };
