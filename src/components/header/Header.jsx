@@ -5,7 +5,6 @@ import {
 	makeStyles,
 	Toolbar,
 	Typography,
-	ThemeProvider,
 	Button,
 } from "@material-ui/core";
 
@@ -13,7 +12,8 @@ const useStyles = makeStyles(() => ({
 	header: {
 		backgroundColor: "#ffffff",
 		paddingRight: "4%",
-		paddingLeft: "3%",
+		paddingLeft: "2%",
+		height: "10vh",
 	},
 	logo: {
 		fontFamily: "Questrial, sans-serif",
@@ -61,13 +61,12 @@ const headersData = [
 
 export default function Header() {
 	const { header, logo, menuButton, toolbar } = useStyles();
-	
-// 最終的にヘッダーに移っている内容
+
+	// 最終的にヘッダーに移っている内容
 	const DISPLAY_DESKTOP = () => {
 		return (
 			<Toolbar className={toolbar}>
 				{LOGO}
-
 				<div>{MENU_BUTTON()}</div>
 			</Toolbar>
 		);
@@ -107,12 +106,10 @@ export default function Header() {
 	};
 
 	return (
-		<ThemeProvider>
-			<div>
-				<header>
-					<AppBar className={header}>{DISPLAY_DESKTOP()} </AppBar>
-				</header>
-			</div>
-		</ThemeProvider>
+		<div>
+			<header>
+				<AppBar className={header}>{DISPLAY_DESKTOP()} </AppBar>
+			</header>
+		</div>
 	);
 }
