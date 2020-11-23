@@ -47,8 +47,8 @@ const WRAPPER = styled.span`
 	width: 100%;
 	height: 100%;
 	padding: 0% 10%;
-	box-sizing: border-box
-	`;
+	box-sizing: border-box;
+`;
 
 const INNER = styled.div`
 	// padding: 6% 10%;
@@ -93,6 +93,7 @@ export default function FirstView(props) {
 				</Link>
 			</div>
 
+			{/* -----オレンジボックス------ */}
 			<CONTAINER>
 				<WRAPPER>
 					<INNER>

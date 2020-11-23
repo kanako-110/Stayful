@@ -30,6 +30,7 @@ export default function SellsPoint() {
 		<div style={{ paddingLeft: "4%", paddingRight: "4%", height: "87vh" }}>
 			<H3>「助けてほしい人」と「助けたい人」を24時間繋げるプラットフォーム</H3>
 			<div style={{ display: "flex", justifyContent: "space-between" }}>
+				{/* ------1つ目ボックス------ */}
 				<SET_DIV>
 					<div>
 						<h5>約10言語に対応</h5>
@@ -39,6 +40,7 @@ export default function SellsPoint() {
 						</P>
 					</div>
 				</SET_DIV>
+				{/* ------2つ目ボックス------ */}
 				<SET_DIV>
 					<div>
 						<h5>24時間繋がる</h5>
@@ -48,6 +50,7 @@ export default function SellsPoint() {
 						</P>
 					</div>
 				</SET_DIV>
+				{/* ------3つ目ボックス------ */}
 				<SET_DIV>
 					<div>
 						<h5>リーズナブルな価格</h5>
