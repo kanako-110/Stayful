@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import translation from "../../img/369812-PB8CJO-186.jpg";
-import connect from "../../img/3946511.jpg";
-import money from "../../img/627.jpg";
+import translation from "../../../img/369812-PB8CJO-186.jpg";
+import connect from "../../../img/3946511.jpg";
+import money from "../../../img/627.jpg";
 
 export default function SellsPoint() {
 	const H3 = styled.h3`
@@ -27,7 +27,7 @@ export default function SellsPoint() {
 	`;
 
 	return (
-		<div style={{ paddingLeft: "4%", paddingRight: "4%", height: "87vh" }}>
+		<div style={{ paddingLeft: "4%", paddingRight: "4%", height: "100vh" }}>
 			<H3>「助けてほしい人」と「助けたい人」を24時間繋げるプラットフォーム</H3>
 			<div style={{ display: "flex", justifyContent: "space-between" }}>
 				{/* ------1つ目ボックス------ */}

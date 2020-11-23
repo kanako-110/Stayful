@@ -1,20 +1,20 @@
 import React from "react";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
-import Header from "./header/Header";
-import Home from "./home";
-import AskList from "./ask/AskList";
-import Footer from "./Footer";
-import LogIn from "./LogIn";
+import Header from "./module/Header";
+import Home from "./pages/home";
+import AskList from "./pages/ask/AskList";
+import Footer from "./module/Footer";
+import LogIn from "./pages/login/LogIn";
 import SignUp from "./SignUp";
-import ChatList from "./chat/ChatList";
-import Chat from "./chat/Chat";
+import ChatList from "./pages/chat/ChatList";
+import Chat from "./pages/chat/Chat";
 import Profile from "./Profile";
 import SignOut from "./SignOut";
-import About from "./About";
-import EditAsk from "./ask/EditAsk";
-import PostAsk from "./ask/PostAsk";
-import AskDetails from "./ask/AskDetails";
-import AboutHelper from "./AboutHelper";
+import About from "./pages/about/About";
+import EditAsk from "./pages/ask/EditAsk";
+import PostAsk from "./pages/ask/PostAsk";
+import AskDetails from "./pages/ask/AskDetails";
+import AboutHelper from "./pages/about/AboutHelper";
 
 const App = () => {
 	return (
