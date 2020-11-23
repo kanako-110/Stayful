@@ -4,11 +4,18 @@ import styled from "styled-components";
 
 const P = styled.p`
 	color: #ffffff;
+	line-height: 1.3rem;
 `;
 
 export default function Footer() {
 	return (
-		<div style={{paddingLeft: "4%", paddingRight: "4%", backgroundColor: "#2f4f4f" }}>
+		<div
+			style={{
+				paddingLeft: "4%",
+				paddingRight: "4%",
+				backgroundColor: "#2f4f4f",
+			}}
+		>
 			<div
 				style={{
 					display: "flex",
@@ -20,23 +27,34 @@ export default function Footer() {
 				<div style={{ paddingRight: "5%" }}>
 					<Link
 						to="/about"
-						style={{ color: "#ffffff ", textDecoration: "none" }}
+						style={{
+							color: "#ffffff ",
+							textDecoration: "none",
+							lineHeight: "1.3rem",
+						}}
 					>
 						Stayfulとは?
 					</Link>
 					<P>ご利用ガイド</P>
 					<Link
 						to="/asklist"
-						style={{ color: "#ffffff ", textDecoration: "none" }}
+						style={{
+							color: "#ffffff ",
+							textDecoration: "none",
+							lineHeight: "1.3rem",
+						}}
 					>
 						ASK
 					</Link>
-
 					<br />
 
 					<Link
 						to="/asklist"
-						style={{ color: "#ffffff ", textDecoration: "none" }}
+						style={{
+							color: "#ffffff ",
+							textDecoration: "none",
+							lineHeight: "1.3rem",
+						}}
 					>
 						HELP
 					</Link>

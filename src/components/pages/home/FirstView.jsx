@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import Button from "../../atomos/Button";
+import Button from "../../atoms/Button";
 import img from "../../../img/66169.jpg";
 import PermIdentityIcon from "@material-ui/icons/PermIdentity";
 import PermContactCalendarIcon from "@material-ui/icons/PermContactCalendar";
