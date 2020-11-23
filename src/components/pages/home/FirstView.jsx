@@ -6,7 +6,7 @@ import img from "../../../img/66169.jpg";
 import PermIdentityIcon from "@material-ui/icons/PermIdentity";
 import PermContactCalendarIcon from "@material-ui/icons/PermContactCalendar";
 import EmojiObjectsIcon from "@material-ui/icons/EmojiObjects";
-import styles from "../../../main.css";
+
 
 const EYE_CATCH = styled.div`
 	display: flex;

@@ -10,10 +10,9 @@ const P = styled.p`
 export default function Footer() {
 	return (
 		<div
+			className="ENTIRE_DIV"
 			style={{
-				paddingLeft: "4%",
-				paddingRight: "4%",
-				backgroundColor: "#2f4f4f",
+				backgroundColor: "#000033",
 			}}
 		>
 			<div
