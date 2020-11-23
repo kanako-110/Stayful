@@ -18,8 +18,8 @@ const H3 = styled.h3`
 `;
 
 const CONTAINER = styled.div`
-	padding-left: 4%;
-	padding-right: 4%;
+	// padding-left: 4%;
+	// padding-right: 4%;
 	display: flex;
 	justify-content: space-between;
 `;
@@ -41,7 +41,7 @@ export default function SellsPoint() {
 	return (
 		<TOP_DIV>
 			<H3>「助けてほしい人」と「助けたい人」を24時間繋げるプラットフォーム</H3>
-			<CONTAINER>
+			<CONTAINER className="ENTIRE_DIV">
 				{/* ------1つ目ボックス------ */}
 				<SET_DIV>
 					<div>
@@ -79,7 +79,6 @@ export default function SellsPoint() {
 					display: "flex",
 					justifyContent: "space-between",
 					width: "20%",
-
 				}}
 			>
 				<div>
