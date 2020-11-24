@@ -18,7 +18,6 @@ export default function Footer() {
 			<div
 				style={{
 					display: "flex",
-					height: "15vh",
 					paddingTop: "3%",
 				}}
 			>
