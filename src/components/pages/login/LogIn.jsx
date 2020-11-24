@@ -64,11 +64,9 @@ export default function Login({ history }) {
 				history.push("/asklist");
 			})
 			.catch((err) => {
-				alert(err)
+				alert(err);
 			});
-			
 	};
-
 
 	return (
 		<div style={{ padding: "9% 0", height: "95vh" }}>
@@ -106,7 +104,7 @@ export default function Login({ history }) {
 							id="password"
 							autoComplete="current-password"
 							value={password}
-							onChange={(e)=>setPassword(e.target.value)}
+							onChange={(e) => setPassword(e.target.value)}
 						/>
 						<FormControlLabel
 							control={<Checkbox value="remember" color="primary" />}

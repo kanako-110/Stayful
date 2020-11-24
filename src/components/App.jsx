@@ -24,10 +24,9 @@ const App = () => {
 			<Router>
 				<Header />
 				<Switch>
-					{/* <Box paddingLeft="4%" paddingRight="1%" width="100%" boxSizing= "border-box"> */}
-					{/* 1つのコンポーネントのみ返すように設定 */}
 					<div>
-						<LoggedInRoute path="/" exact component={Home} />
+						{/* <LoggedInRoute path="/" exact component={Home} /> */}
+						<Route path="/" exact component={Home} />
 						<Route path="/asklist" exact component={AskList} />
 						<Route path="/login" exact component={LogIn} />
 						<Route path="/signup" exact component={SignUp} />

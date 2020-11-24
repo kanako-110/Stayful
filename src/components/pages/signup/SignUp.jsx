@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: theme.palette.secondary.main,
 	},
 	form: {
-		width: "100%", // Fix IE 11 issue.
+		width: "100%",
 		marginTop: theme.spacing(3),
 	},
 	submit: {
@@ -46,9 +46,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function SignUp({history}) {
+export default function SignUp({ history }) {
 	const classes = useStyles();
-	const [name, setName] = useState("")
+	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
@@ -58,13 +58,13 @@ export default function SignUp({history}) {
 			.auth()
 			.createUserWithEmailAndPassword(email, password)
 			.then(() => {
-				history.push("/asklist")
+				history.push("/asklist");
 			})
 			.catch((err) => {
 				alert(err);
 			});
-			console.log(email)
-			console.log(password)
+		console.log(email);
+		console.log(password);
 	};
 
 	return (
@@ -104,7 +104,7 @@ export default function SignUp({history}) {
 									name="email"
 									autoComplete="email"
 									value={email}
-									onChange={(e)=>setEmail(e.target.value)}
+									onChange={(e) => setEmail(e.target.value)}
 								/>
 							</Grid>
 							<Grid item xs={12}>
