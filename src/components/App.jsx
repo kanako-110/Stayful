@@ -1,13 +1,13 @@
 import React from "react";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import { AuthProvider } from "../firebase/AuthService";
-import LoggedInRoute from '../firebase/LoggedInRoute'
+import LoggedInRoute from "../firebase/LoggedInRoute";
 import Header from "./module/Header";
 import Home from "./pages/home";
 import AskList from "./pages/ask/AskList";
 import Footer from "./module/Footer";
 import LogIn from "./pages/login/LogIn";
-import SignUp from "./pages/signup/SignUp";
+import SignUp from "./pages/login/SignUp";
 import ChatList from "./pages/chat/ChatList";
 import Chat from "./pages/chat/Chat";
 import Profile from "./Profile";
@@ -17,8 +17,11 @@ import EditAsk from "./pages/ask/EditAsk";
 import PostAsk from "./pages/ask/PostAsk";
 import AskDetails from "./pages/ask/AskDetails";
 import AboutHelper from "./pages/about/AboutHelper";
+import ShowProfile from "./pages/profile/ShowProfile";
+import Logout from "./pages/login/Logout";
 
 const App = () => {
+
 	return (
 		<AuthProvider>
 			<Router>
@@ -39,7 +42,8 @@ const App = () => {
 						<Route path="/postask" exact component={PostAsk} />
 						<Route path="/askdetails/:id" exact component={AskDetails} />
 						<Route path="/abouthelper" exact component={AboutHelper} />
-						{/* </Box> */}
+						<Route path="/yourprofile" exact component={ShowProfile} />
+						<Route path="/logout" exact component={Logout} />
 					</div>
 				</Switch>
 				<Footer />

@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
+import firebase from "../../firebase/firebase";
+import { AuthContext } from "../../firebase/AuthService";
+import SelectedMenu from "../atoms/SelectedMenu";
 import {
 	AppBar,
 	makeStyles,
@@ -7,6 +10,8 @@ import {
 	Typography,
 	Button,
 } from "@material-ui/core";
+import MailOutlineIcon from "@material-ui/icons/MailOutline";
+import MailImg from '../../img/envelope.png'
 
 const useStyles = makeStyles(() => ({
 	header: {
@@ -33,7 +38,8 @@ const useStyles = makeStyles(() => ({
 	},
 }));
 
-const headersData = [
+// ----未ログイン時------//
+const HEADER_DATA_WITHOUT_LOGIN = [
 	{
 		label: "ASK",
 		href: "/asklist",
@@ -42,6 +48,7 @@ const headersData = [
 		label: "HELP",
 		href: "/asklist",
 	},
+	// ---未ログイン時----//
 	{
 		label: "LOGIN",
 		href: "/login",
@@ -50,16 +57,48 @@ const headersData = [
 		label: "SIGNUP",
 		href: "/signup",
 	},
-	// {/* 👉まだLoginしてないときだけ以下をだす */}
-	// 		{/* <Link to="/login">LogIn</Link>
-	// {/*👉 すでにLoginしてたときのみ以下を出す */}
-	// 			{/* <Link to="chatlist">Mail</Link> */}
-	// 			{/* ドロップダウンで、以下の二つ(プロフィールかログアウト)を選択できる。そのドロップダウンより飛ぶ */}
-	// 			{/* <Link to="profile">profile</Link>
-	// 		<Link to="signout">SignOut</Link> */}
 ];
 
-export default function Header() {
+const handle_logout = () => {
+	firebase
+		.auth()
+		.signOut()
+		.then(() => {
+			console.log("ログアウトしました");
+		})
+		.catch((error) => {
+			console.log(`ログアウト時にエラーが発生しました (${error})`);
+		});
+};
+
+//-----すでにログイン済み時--------//
+const HEADER_DATA_WITH_LOGIN = [
+	{
+		label: "ASK",
+		href: "/asklist",
+	},
+	{
+		label: "HELP",
+		href: "/asklist",
+	},
+	//---すでにログイン済み時---//
+	{
+		label: "MAIL",
+		// label : <img src={MailImg} style={ {height: "30px", display: "inline-block", verticalAlign: "middle"} }/>,
+		// label: (
+		// 	<MailOutlineIcon
+		// 		fontSize="large"
+		// 		style={{ display: "inline-block", verticalAlign: "middle" }}
+		// 	/>
+		// ),
+		href: "/chatlist",
+	},
+	{
+		label: <SelectedMenu handle_logout={handle_logout} />,
+	},
+];
+
+export default function Header({}) {
 	const { header, logo, menuButton, toolbar } = useStyles();
 
 	// 最終的にヘッダーに移っている内容
@@ -87,22 +126,45 @@ export default function Header() {
 		</Typography>
 	);
 
+	const user = useContext(AuthContext);
 	const MENU_BUTTON = () => {
-		return headersData.map(({ label, href }) => {
-			return (
-				<Button
-					{...{
-						key: label,
-						color: "#333333",
-						to: href,
-						component: Link,
-						className: menuButton,
-					}}
-				>
-					{label}
-				</Button>
-			);
-		});
+		console.log(user);
+		if (user) {
+			return HEADER_DATA_WITH_LOGIN.map(({ label, href }) => {
+				return (
+					<Button
+						{...{
+							key: label,
+							color: "#333333",
+							to: href,
+							component: Link,
+							className: menuButton,
+							size: "large",
+						}}
+					>
+						<div style={{ fontSize: "1.2rem" }}> {label} </div>
+					</Button>
+				);
+			});
+		}
+		if (!user) {
+			return HEADER_DATA_WITHOUT_LOGIN.map(({ label, href }) => {
+				return (
+					<Button
+						{...{
+							key: label,
+							color: "#333333",
+							to: href,
+							component: Link,
+							className: menuButton,
+							size: "large",
+						}}
+					>
+						<div style={{ fontSize: "1.2rem" }}> {label} </div>
+					</Button>
+				);
+			});
+		}
 	};
 
 	return (
