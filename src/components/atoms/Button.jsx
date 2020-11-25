@@ -24,7 +24,7 @@ const BUTTON = styled.button`
 export default function Button({ text, link, top, left }) {
 	return (
 		<Link to={link}>
-			<BUTTON style={{ top: top, left:left }}>{text}</BUTTON>
+			<BUTTON style={{ top: top, left: left }}>{text}</BUTTON>
 			{/* //componentごとに変える */}
 		</Link>
 	);
