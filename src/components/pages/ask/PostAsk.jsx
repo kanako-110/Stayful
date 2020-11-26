@@ -34,7 +34,7 @@ const PROFILE_BOX = styled.div`
 const POST_BOX = styled.div`
 	position: absolute;
 	left: 38%;
-	top: 25%;
+	top: 30%;
 	height: 90vh;
 	width: 53%;
 	background-color: #ffffff;
