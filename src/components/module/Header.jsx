@@ -11,7 +11,7 @@ import {
 	Button,
 } from "@material-ui/core";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
-import MailImg from '../../img/envelope.png'
+import MailImg from "../../img/envelope.png";
 
 const useStyles = makeStyles(() => ({
 	header: {
