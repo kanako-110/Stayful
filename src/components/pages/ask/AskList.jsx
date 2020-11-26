@@ -2,6 +2,8 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { withRouter } from "react-router";
 import Button from "../../atoms/Button";
+import CategoryBox from "../../atoms/CategoryBox";
+import SelectCountryBox from "../../atoms/SelectCountryBox"
 import styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -27,17 +29,11 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const TOP_DIV = styled.div`
-	padding-top: 10%;
-	height: 100vh;
-	background-color: #faebd7;
-`;
-
-const H2 = styled.h2`
-	color: #f5b47a;
-	font-size: 2rem;
+const H3 = styled.h3`
 	position: absolute;
 	left: 38%;
+	color: #f5b47a;
+	font-size: 2rem;
 `;
 
 const SEARCH_BOX = styled.div`
@@ -48,10 +44,10 @@ const SEARCH_BOX = styled.div`
 `;
 
 const LIST_CONTAINER = styled.div`
-	width: 53%;
 	position: absolute;
 	left: 38%;
 	top: 37%;
+	width: 53%;
 `;
 
 const ASK_BOX = styled.div`
@@ -77,110 +73,74 @@ const AskList = (props) => {
 		setAge(event.target.value);
 	};
 
-	const history = useHistory()
+	const history = useHistory();
 	const onlist_click = () => {
-		history.push('/askdetails/lid')
-	}
+		history.push("/askdetails/lid");
+	};
 
 	return (
-		<TOP_DIV className="ENTIRE_DIV">
-			<H2>相談する</H2>
-			{/* ////検索ボックス///// */}
-			<SEARCH_BOX>
-				{/* 1 条件 */}
-				<form className={classes.root} noValidate autoComplete="off">
-					<TextField
-						id="outlined-basic"
-						label="条件で絞る"
-						variant="outlined"
-					/>
-				</form>
-				{/* 2カテゴリ */}
-				<FormControl
-					variant="outlined"
-					className={classes.formControl}
-					style={{ width: "25ch" }}
-				>
-					<InputLabel id="demo-simple-select-outlined-label">
-						カテゴリ
-					</InputLabel>
-					<Select
-						labelId="demo-simple-select-outlined-label"
-						id="demo-simple-select-outlined"
-						value={age}
-						onChange={handleChange}
-						label="Age"
-					>
-						<MenuItem value="">
-							<em>None</em>
-						</MenuItem>
-						<MenuItem value={10}>お金</MenuItem>
-						<MenuItem value={20}>携帯登録</MenuItem>
-						<MenuItem value={30}>制度</MenuItem>
-					</Select>
-				</FormControl>
-				{/* 3国で絞る */}
-				<FormControl variant="outlined" className={classes.formControl}>
-					<InputLabel id="demo-simple-select-outlined-label">
-						国で絞る
-					</InputLabel>
-					<Select
-						labelId="demo-simple-select-outlined-label"
-						id="demo-simple-select-outlined"
-						value={age}
-						onChange={handleChange}
-						label="Age"
-					>
-						<MenuItem value="">
-							<em>None</em>
-						</MenuItem>
-						<MenuItem value={10}>アメリカ</MenuItem>
-						<MenuItem value={20}>イギリス</MenuItem>
-						<MenuItem value={30}>カナダ</MenuItem>
-					</Select>
-				</FormControl>
-				{/* 4言語 */}
-				<FormControl variant="outlined" className={classes.formControl}>
-					<InputLabel id="demo-simple-select-outlined-label">
-						言語で絞る
-					</InputLabel>
-					<Select
-						labelId="demo-simple-select-outlined-label"
-						id="demo-simple-select-outlined"
-						value={age}
-						onChange={handleChange}
-						label="Age"
-					>
-						<MenuItem value="">
-							<em>None</em>
-						</MenuItem>
-						<MenuItem value={10}>英語</MenuItem>
-						<MenuItem value={20}>ドイツ語</MenuItem>
-						<MenuItem value={30}>韓国語</MenuItem>
-					</Select>
-				</FormControl>
-			</SEARCH_BOX>
+		<div className="COLOR_POSITION">
+			<div className="ENTIRE_DIV">
+				<H3>相談する</H3>
+				{/* ////検索ボックス///// */}
+				<SEARCH_BOX>
+					{/* 1 条件 */}
+					<form className={classes.root} noValidate autoComplete="off">
+						<TextField
+							id="outlined-basic"
+							label="条件で絞る"
+							variant="outlined"
+						/>
+					</form>
+					{/* 2カテゴリ */}
+					<CategoryBox />
+					{/* 3国で絞る */}
+					<SelectCountryBox />
+					{/* 4言語 */}
+					<FormControl variant="outlined" className={classes.formControl}>
+						<InputLabel id="demo-simple-select-outlined-label">
+							言語で絞る
+						</InputLabel>
+						<Select
+							labelId="demo-simple-select-outlined-label"
+							id="demo-simple-select-outlined"
+							value={age}
+							onChange={handleChange}
+							label="Age"
+						>
+							<MenuItem value="">
+								<em>None</em>
+							</MenuItem>
+							<MenuItem value={10}>英語</MenuItem>
+							<MenuItem value={20}>ドイツ語</MenuItem>
+							<MenuItem value={30}>韓国語</MenuItem>
+						</Select>
+					</FormControl>
+				</SEARCH_BOX>
 
-			{/*----- 編集・投稿ボタン----- */}
-			<Button text="投稿する" link="/askdetails/:id" top="25%" left="86%" />
-			<Button
-				text="自分の投稿を編集する"
-				link="/editask"
-				top="25%"
-				left="65%"
-			/>
+				{/*----- 編集・投稿ボタン----- */}
+				<Button text="投稿する" link="/postask" top="25%" left="86%" />
+				<Button
+					text="自分の投稿を編集する"
+					link="/editask"
+					top="25%"
+					left="65%"
+				/>
 
-			{/* -----ask一覧 ------ */}
-			<LIST_CONTAINER>
-				<ASK_BOX >
-					<TITLE onClick={onlist_click}>アメリカでの銀行の作り方にこまっています</TITLE>
-					<br />
-					<p>
-						アメリカカルフォルニア州に住んでいます。銀行でアカウントを作りたいのですが、制度自体や言語が分からず困っています。チャットで制度について日本語で話してくれる方、現地の人に私の事情を説明してくれる方探しています。
-					</p>
-				</ASK_BOX>
-			</LIST_CONTAINER>
-		</TOP_DIV>
+				{/* -----ask一覧 ------ */}
+				<LIST_CONTAINER>
+					<ASK_BOX>
+						<TITLE onClick={onlist_click}>
+							アメリカでの銀行の作り方にこまっています
+						</TITLE>
+						<br />
+						<p>
+							アメリカカルフォルニア州に住んでいます。銀行でアカウントを作りたいのですが、制度自体や言語が分からず困っています。チャットで制度について日本語で話してくれる方、現地の人に私の事情を説明してくれる方探しています。
+						</p>
+					</ASK_BOX>
+				</LIST_CONTAINER>
+			</div>
+		</div>
 	);
 };
 
