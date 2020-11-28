@@ -82,10 +82,10 @@ export default function SellsPoint() {
 				}}
 			>
 				<div>
-					<Button text="今すぐ始める" link="/login" top="185%" left="37%" />
+					<Button text="今すぐ始める" link="/login" top="187%" left="37%" />
 				</div>
 				<div>
-					<Button text="詳しく見る" link="/about" top="185%" left="55%" />
+					<Button text="詳しく見る" link="/about" top="187%" left="55%" />
 				</div>
 			</div>
 		</TOP_DIV>

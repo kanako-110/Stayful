@@ -7,7 +7,6 @@ import PermIdentityIcon from "@material-ui/icons/PermIdentity";
 import PermContactCalendarIcon from "@material-ui/icons/PermContactCalendar";
 import EmojiObjectsIcon from "@material-ui/icons/EmojiObjects";
 
-
 const EYE_CATCH = styled.div`
 	display: flex;
 	justify-content: space-between;
@@ -65,7 +64,9 @@ const P3 = styled.p`
 	display: inline-block;
 `;
 
-export default function FirstView(props) {
+export default function FirstView() {
+
+
 	return (
 		<div style={{ height: "100vh" }}>
 			<div style={{ paddingLeft: "4%", paddingRight: "1%" }}>
@@ -86,7 +87,7 @@ export default function FirstView(props) {
 					Stayfulはあなたの海外滞在を24時間サポートします。
 				</P>
 
-				<Button text="今すぐ相談する" link="/asklist" top="53%" />
+				<Button type="submit" text="今すぐ相談する" top="53%" link="/asklist" />
 
 				<Link to="/aboutHelper" style={{ color: "#333333" }}>
 					<P2>Helperとして登録したい方はコチラ</P2>

@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function SelectedMenu({handle_logout}) {
+export default function SelectedMenu() {
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
 	const anchorRef = React.useRef(null);
@@ -41,7 +41,7 @@ export default function SelectedMenu({handle_logout}) {
 			return;
 		}
 		setOpen(false);
-    handle_logout()
+		handle_logout();
 	};
 
 	function handleListKeyDown(event) {
@@ -60,6 +60,18 @@ export default function SelectedMenu({handle_logout}) {
 
 		prevOpen.current = open;
 	}, [open]);
+
+	const handle_logout = () => {
+		firebase
+			.auth()
+			.signOut()
+			.then(() => {
+				console.log("ログアウトしました");
+			})
+			.catch((error) => {
+				console.log(`ログアウト時にエラーが発生しました (${error})`);
+			});
+	};
 
 	return (
 		<div className={classes.root}>
@@ -100,7 +112,7 @@ export default function SelectedMenu({handle_logout}) {
 										<Link
 											to="/yourprofile"
 											style={{
-												color: "#333333 ",
+												color: "#333333",
 												textDecoration: "none",
 											}}
 										>
@@ -125,4 +137,3 @@ export default function SelectedMenu({handle_logout}) {
 		</div>
 	);
 }
-
