@@ -1,10 +1,10 @@
-import "./reset.css";
-import "./main.css";
 import React from "react";
 import ReactDOM from "react-dom";
-import { createMuiTheme } from "@material-ui/core";
-
+// import {Provider} from "react-redux"
 import App from "./components/App";
+import "./reset.css";
+import "./main.css";
+
 
 
 

@@ -3,14 +3,14 @@ import "firebase/auth";
 import "firebase/firestore";
 
 const firebaseConfig = {
-	apiKey: "AIzaSyBqPVVI_SMu9bwKLs1AYopi7GrwG5bWBGs",
-	authDomain: "stayful-9fb54.firebaseapp.com",
-	databaseURL: "https://stayful-9fb54.firebaseio.com",
-	projectId: "stayful-9fb54",
-	storageBucket: "stayful-9fb54.appspot.com",
-	messagingSenderId: "1011569342248",
-	appId: "yarn1:1011569342248:web:22ae454191ca3eec3d421d",
-	measurementId: "G-2NY0QE3XQV",
+	apiKey: "AIzaSyDBF1NgLcH6NBxCOYzskD2dF9EGiagd24M",
+    authDomain: "stayful-605a0.firebaseapp.com",
+    databaseURL: "https://stayful-605a0.firebaseio.com",
+    projectId: "stayful-605a0",
+    storageBucket: "stayful-605a0.appspot.com",
+    messagingSenderId: "223954608343",
+    appId: "1:223954608343:web:69b6a89497df71c4ab1092",
+    measurementId: "G-TY03EGBWBY"
 };
 
 firebase.initializeApp(firebaseConfig);

@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
-import firebase from "../../firebase/firebase";
 import { AuthContext } from "../../firebase/AuthService";
 import SelectedMenu from "../atoms/SelectedMenu";
+import styled from "styled-components";
 import {
 	AppBar,
 	makeStyles,
@@ -10,7 +10,6 @@ import {
 	Typography,
 	Button,
 } from "@material-ui/core";
-import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import MailImg from "../../img/envelope.png";
 
 const useStyles = makeStyles(() => ({
@@ -19,6 +18,8 @@ const useStyles = makeStyles(() => ({
 		paddingRight: "2%",
 		paddingLeft: "1%",
 		height: "10vh",
+		color: "#333333",
+		fontFamily: "Questrial, sans-serif",
 	},
 	logo: {
 		fontFamily: "Questrial, sans-serif",
@@ -26,87 +27,45 @@ const useStyles = makeStyles(() => ({
 		color: "#333333",
 		textAlign: "left",
 	},
-	menuButton: {
-		fontFamily: "Questrial, sans-serif",
-		fontWeight: 700,
-		size: "18px",
-		marginLeft: "38px",
-	},
 	toolbar: {
 		display: "flex",
 		justifyContent: "space-between",
 	},
 }));
 
-// ----未ログイン時------//
-const HEADER_DATA_WITHOUT_LOGIN = [
-	{
-		label: "ASK",
-		href: "/asklist",
-	},
-	{
-		label: "HELP",
-		href: "/asklist",
-	},
-	// ---未ログイン時----//
-	{
-		label: "LOGIN",
-		href: "/login",
-	},
-	{
-		label: "SIGNUP",
-		href: "/signup",
-	},
-];
+const BUTTON_BOX = styled.div`
+	display: flex;
+	justify-content: space-between;
+	width: 30%;
+`;
 
-const handle_logout = () => {
-	firebase
-		.auth()
-		.signOut()
-		.then(() => {
-			console.log("ログアウトしました");
-		})
-		.catch((error) => {
-			console.log(`ログアウト時にエラーが発生しました (${error})`);
-		});
-};
+const LINK = styled.a`
+	font-size: 1.1rem;
+	padding: 3%;
+	font-weight: bold;
+	border-radius: 6px;
+	color: #333333;
+	text-decoration: none;
+	height: 30px;
+	line-height: 30px;
+	&:hover {
+		color: "#333333";
+		background-color: rgb(23 22 22 / 7%);
+	}
+`;
 
-//-----すでにログイン済み時--------//
-const HEADER_DATA_WITH_LOGIN = [
-	{
-		label: "ASK",
-		href: "/asklist",
-	},
-	{
-		label: "HELP",
-		href: "/asklist",
-	},
-	//---すでにログイン済み時---//
-	{
-		label: "MAIL",
-		// label : <img src={MailImg} style={ {height: "30px", display: "inline-block", verticalAlign: "middle"} }/>,
-		// label: (
-		// 	<MailOutlineIcon
-		// 		fontSize="large"
-		// 		style={{ display: "inline-block", verticalAlign: "middle" }}
-		// 	/>
-		// ),
-		href: "/chatlist",
-	},
-	{
-		label: <SelectedMenu handle_logout={handle_logout} />,
-	},
-];
 
-export default function Header({}) {
-	const { header, logo, menuButton, toolbar } = useStyles();
+
+
+export default function Header() {
+	const { header, logo,  toolbar } = useStyles();
 
 	// 最終的にヘッダーに移っている内容
 	const DISPLAY_DESKTOP = () => {
 		return (
 			<Toolbar className={toolbar}>
 				{LOGO}
-				<div>{MENU_BUTTON()}</div>
+				{MENU_BUTTON()}
 			</Toolbar>
 		);
 	};
@@ -115,6 +74,7 @@ export default function Header({}) {
 	const LOGO_click = () => {
 		history.push("/");
 	};
+
 	const LOGO = (
 		<Typography
 			variant="h4"
@@ -128,49 +88,39 @@ export default function Header({}) {
 
 	const user = useContext(AuthContext);
 	const MENU_BUTTON = () => {
-		console.log(user);
 		if (user) {
-			return HEADER_DATA_WITH_LOGIN.map(({ label, href }) => {
-				return (
-					<Button
-						{...{
-							key: label,
-							color: "#333333",
-							to: href,
-							component: Link,
-							className: menuButton,
-							size: "large",
-						}}
-					>
-						<div style={{ fontSize: "1.2rem" }}> {label} </div>
-					</Button>
-				);
-			});
-		}
-		if (!user) {
-			return HEADER_DATA_WITHOUT_LOGIN.map(({ label, href }) => {
-				return (
-					<Button
-						{...{
-							key: label,
-							color: "#333333",
-							to: href,
-							component: Link,
-							className: menuButton,
-							size: "large",
-						}}
-					>
-						<div style={{ fontSize: "1.2rem" }}> {label} </div>
-					</Button>
-				);
-			});
+			return (
+				<BUTTON_BOX>
+					<LINK href="/asklist">ASK</LINK>
+					<LINK href="/asklist">HELP</LINK>
+					<LINK href="/chatlist">
+						<img
+							src={MailImg}
+							style={{
+								height: "30px",
+							}}
+						/>
+					</LINK>
+					<SelectedMenu  />
+				</BUTTON_BOX>
+			);
+		
+		}	else {  	// -------未ログイン時--------//
+			return (
+				<BUTTON_BOX>
+					<LINK href="/asklist">ASK</LINK>
+					<LINK href="/asklist">HELP</LINK>
+					<LINK href="/login">LOGIN</LINK>
+					<LINK href="/signup">SIGNUP</LINK>
+				</BUTTON_BOX>
+			);
 		}
 	};
 
 	return (
 		<div>
 			<header>
-				<AppBar className={header}>{DISPLAY_DESKTOP()} </AppBar>
+				<AppBar className={header}>{DISPLAY_DESKTOP()}</AppBar>
 			</header>
 		</div>
 	);

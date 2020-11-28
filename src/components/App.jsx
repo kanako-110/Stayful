@@ -21,30 +21,26 @@ import ShowProfile from "./pages/profile/ShowProfile";
 import Logout from "./pages/login/Logout";
 
 const App = () => {
-
 	return (
 		<AuthProvider>
 			<Router>
 				<Header />
 				<Switch>
-					<div>
-						{/* <LoggedInRoute path="/" exact component={Home} /> */}
-						<Route path="/" exact component={Home} />
-						<Route path="/asklist" exact component={AskList} />
-						<Route path="/login" exact component={LogIn} />
-						<Route path="/signup" exact component={SignUp} />
-						<Route path="/chatlist" exact component={ChatList} />
-						<Route path="/chat" exact component={Chat} />
-						<Route path="/profile" exact component={Profile} />
-						<Route path="/signout" exact component={SignOut} />
-						<Route path="/about" exact component={About} />
-						<Route path="/editask" exact component={EditAsk} />
-						<Route path="/postask" exact component={PostAsk} />
-						<Route path="/askdetails/:id" exact component={AskDetails} />
-						<Route path="/abouthelper" exact component={AboutHelper} />
-						<Route path="/yourprofile" exact component={ShowProfile} />
-						<Route path="/logout" exact component={Logout} />
-					</div>
+					<Route path="/" exact component={Home} />
+					<Route path="/asklist" exact component={AskList} />
+					<Route path="/login" exact component={LogIn} />
+					<Route path="/signup" exact component={SignUp} />
+					<Route path="/chatlist" exact component={ChatList} />
+					<Route path="/chat" exact component={Chat} />
+					<Route path="/profile" exact component={Profile} />
+					<Route path="/signout" exact component={SignOut} />
+					<Route path="/about" exact component={About} />
+					<Route path="/editask" exact component={EditAsk} />
+					<Route path="/postask" exact component={PostAsk} />
+					<Route path="/askdetails/:id" exact component={AskDetails} />
+					<Route path="/abouthelper" exact component={AboutHelper} />
+					<Route path="/yourprofile" exact component={ShowProfile} />
+					<Route path="/logout" exact component={Logout} />
 				</Switch>
 				<Footer />
 			</Router>
