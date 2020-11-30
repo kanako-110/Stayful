@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
-// import { useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import shortid from "shortid";
 import firebase from "../../../firebase/firebase";
 import styled from "styled-components";
@@ -44,37 +44,43 @@ const POST_BOX = styled.div`
 	background-color: #ffffff;
 `;
 
+const ERROR = styled.p`
+	color: #ff4500;
+	//helperTextと同じに設定してある
+	margin-left: 14px;
+	margin-right: 14px;
+	line-height: 1.66;
+	font-size: 0.75rem;
+	letter-spacing: 0.03333em;
+`;
+
 export default function PostAsk() {
 	const classes = useStyles();
 	const history = useHistory();
-	const [title, setTitle] = useState("");
-	const [detail, setDetail] = useState("");
+	const { register, handleSubmit, errors } = useForm();
 
-	const onForm_submit = (e) => {
+	const onForm_submit = (data) => {
 		const askId = shortid.generate();
-		e.preventDefault();
+
 		firebase
 			.firestore()
 			.collection("ask")
 			.doc(askId)
 			.set({
 				askId: askId,
-				title: title,
-				detail: detail,
+				title: data.title,
+				detail: data.detail,
 				createdAt: new Date(),
 				getday: new Date().getDay(),
 			})
 			.then(function () {
 				console.log("Document successfully written!");
-				history.push("/asklist")
+				history.push("/asklist");
 			})
 			.catch(function (error) {
 				console.error("Error writing document: ", error);
 			});
-
 	};
-
-
 
 	return (
 		<div className="COLOR_POSITION">
@@ -86,13 +92,14 @@ export default function PostAsk() {
 
 				{/* -----投稿ボックス----- */}
 				<POST_BOX>
-					<form onSubmit={onForm_submit}>
+					<form onSubmit={handleSubmit(onForm_submit)}>
 						<div className={classes.root}>
 							<div style={{ width: "90%", padding: "5% 0" }}>
+								{errors.title && <ERROR>タイトルを記入してください</ERROR>}
 								<TextField
+									name="title"
 									id="outlined-full-width"
 									label="タイトル"
-									name="Title"
 									style={{ margin: 8 }}
 									placeholder="アメリカ・カルフォルニアで銀行口座をつくりたいです"
 									helperText="具体的に書くと回答が来やすいです!"
@@ -102,12 +109,13 @@ export default function PostAsk() {
 										shrink: true,
 									}}
 									variant="outlined"
-									value={title}
-									onChange={(e) => setTitle(e.target.value)}
+									inputRef={register({ required: true })}
 								/>
 								<CategoryBox /> <br />
 								<SelectCountryBox />
+								{errors.detail && <ERROR>相談内容を記入してください</ERROR>}
 								<TextField
+									name="detail"
 									id="outlined-full-width"
 									label="相談内容"
 									style={{ margin: 8 }}
@@ -122,12 +130,11 @@ export default function PostAsk() {
 										shrink: true,
 									}}
 									variant="outlined"
-									value={detail}
-									onChange={(e) => setDetail(e.target.value)}
+									inputRef={register({ required: true })}
 								/>
 							</div>
 						</div>
-							<Button  text="投稿する" top="88%" left="76%" />					
+						<Button text="投稿する" top="88%" left="76%" />
 					</form>
 				</POST_BOX>
 			</div>
