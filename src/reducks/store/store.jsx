@@ -1,5 +1,5 @@
 import { createStore as reduxCreateStore, combineReducers, compose, applyMiddleware } from "redux";
-import { AskReducer } from "../dots/reducers";
+import { AskReducer } from "../ask/reducer";
 import reduxThunk from "redux-thunk";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; //Redux DevToolsを使うために定義
