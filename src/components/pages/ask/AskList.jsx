@@ -44,27 +44,8 @@ const SEARCH_BOX = styled.div`
 	background-color: #ffffff;
 `;
 
-// const LIST_CONTAINER = styled.div`
-// 	position: absolute;
-// 	left: 38%;
-// 	top: 37%;
-// 	width: 53%;
-// `;
 
-// const ASK_BOX = styled.div`
-// 	background-color: #ffffff;
-// 	width: 100%;
-// 	height: 15vh;
-// 	padding: 5% 3%;
-// `;
 
-// const TITLE = styled.h6`
-// 	font-size: 1.3rem;
-// 	padding-bottom: 2%;
-// 	&:hover {
-// 		color: #696969;
-// 	}
-// `;
 
 const AskList = () => {
 	const classes = useStyles();
@@ -86,7 +67,7 @@ const AskList = () => {
 	};
 
 	return (
-		<div className="COLOR_POSITION">
+		<div className="COLOR_POSITION" style={{height:"230vh"}}>
 			<div className="ENTIRE_DIV">
 				<H3>相談する</H3>
 				{/* ////検索ボックス///// */}
@@ -129,14 +110,16 @@ const AskList = () => {
 				<Button
 					text="自分の投稿を編集する"
 					link="/editask"
-					top="25%"
+					top="24%"
 					left="65%"
 				/>
 				<div onClick={onPost_click}>
-					<Button text="投稿する" top="25%" left="86%" />
+					<Button text="投稿する" top="24%" left="86%" />
 				</div>
+
 				{/* -----ask一覧 ------ */}
 				<PostedAsk />
+				
 			</div>
 		</div>
 	);
