@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import { AuthContext } from "../../../firebase/AuthService";
 import firebase from "../../../firebase/firebase";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";

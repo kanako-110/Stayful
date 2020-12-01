@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { withRouter } from "react-router";
+import { AuthContext } from "../../../firebase/AuthService";
 import Button from "../../atoms/Button";
 import CategoryBox from "../../atoms/CategoryBox";
-import SelectCountryBox from "../../atoms/SelectCountryBox"
+import SelectCountryBox from "../../atoms/SelectCountryBox";
+import PostedAsk from "./PostedAsk";
 import styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -43,29 +44,29 @@ const SEARCH_BOX = styled.div`
 	background-color: #ffffff;
 `;
 
-const LIST_CONTAINER = styled.div`
-	position: absolute;
-	left: 38%;
-	top: 37%;
-	width: 53%;
-`;
+// const LIST_CONTAINER = styled.div`
+// 	position: absolute;
+// 	left: 38%;
+// 	top: 37%;
+// 	width: 53%;
+// `;
 
-const ASK_BOX = styled.div`
-	background-color: #ffffff;
-	width: 100%;
-	height: 15vh;
-	padding: 5% 3%;
-`;
+// const ASK_BOX = styled.div`
+// 	background-color: #ffffff;
+// 	width: 100%;
+// 	height: 15vh;
+// 	padding: 5% 3%;
+// `;
 
-const TITLE = styled.h6`
-	font-size: 1.3rem;
-	padding-bottom: 2%;
-	&:hover {
-		color: #696969;
-	}
-`;
+// const TITLE = styled.h6`
+// 	font-size: 1.3rem;
+// 	padding-bottom: 2%;
+// 	&:hover {
+// 		color: #696969;
+// 	}
+// `;
 
-const AskList = (props) => {
+const AskList = () => {
 	const classes = useStyles();
 	const [age, setAge] = React.useState("");
 
@@ -74,8 +75,14 @@ const AskList = (props) => {
 	};
 
 	const history = useHistory();
-	const onlist_click = () => {
-		history.push("/askdetails/lid");
+
+	const user = useContext(AuthContext);
+	const onPost_click = () => {
+		if (user) {
+			history.push("postask");
+		} else {
+			history.push("login");
+		}
 	};
 
 	return (
@@ -119,29 +126,20 @@ const AskList = (props) => {
 				</SEARCH_BOX>
 
 				{/*----- 編集・投稿ボタン----- */}
-				<Button text="投稿する" link="/postask" top="25%" left="86%" />
 				<Button
 					text="自分の投稿を編集する"
 					link="/editask"
 					top="25%"
 					left="65%"
 				/>
-
+				<div onClick={onPost_click}>
+					<Button text="投稿する" top="25%" left="86%" />
+				</div>
 				{/* -----ask一覧 ------ */}
-				<LIST_CONTAINER>
-					<ASK_BOX>
-						<TITLE onClick={onlist_click}>
-							アメリカでの銀行の作り方にこまっています
-						</TITLE>
-						<br />
-						<p>
-							アメリカカルフォルニア州に住んでいます。銀行でアカウントを作りたいのですが、制度自体や言語が分からず困っています。チャットで制度について日本語で話してくれる方、現地の人に私の事情を説明してくれる方探しています。
-						</p>
-					</ASK_BOX>
-				</LIST_CONTAINER>
+				<PostedAsk />
 			</div>
 		</div>
 	);
 };
 
-export default withRouter(AskList);
+export default AskList;
