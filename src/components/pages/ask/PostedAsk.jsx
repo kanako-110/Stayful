@@ -31,7 +31,7 @@ export default function PostedAsk() {
 
 	const history = useHistory();
 	const onTitle_click = () => {
-		history.push("/askdetails/lid");
+		history.push("/askdetails/:id");
 	};
 
 	useEffect(() => {
