@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import Faker from "faker";
 import firebase from "../../../firebase/firebase";
 import styled from "styled-components";
 import Button from "../../atoms/Button";
@@ -23,22 +24,33 @@ const TITLE = styled.h6`
 	padding-bottom: 7%;
 `;
 
-const P = styled.p `
-font-size: 1.2rem;
-`
+const P = styled.p`
+	font-size: 1.2rem;
+`;
 
 const PROFILE_BOX = styled.div`
 	width: 27%;
 	height: 28vh;
 	background-color: #ffffff;
+	text-align: center;
+	padding: 2% 0;
 `;
 
 const AskDetails = () => {
 	const { id } = useParams();
 	const [askDetail, set_askDetail] = useState("");
-	console.log(id);
+
+
+
+	
+
+	const user = {
+		name: Faker.internet.userName(),
+		avatar: Faker.image.people(),
+	};
 
 	useEffect(() => {
+
 		firebase
 			.firestore()
 			.collection("ask")
@@ -51,13 +63,14 @@ const AskDetails = () => {
 			});
 	}, []);
 
-	console.log(askDetail);
-
 	return (
 		<div className="COLOR_POSITION" style={{ height: "80vh" }}>
 			<div className="ENTIRE_DIV">
 				<POSITION_CONTAINER>
-					<PROFILE_BOX></PROFILE_BOX>
+					<PROFILE_BOX>
+					 <img  style= {{paddingBottom: "20px"}}  src={user.avatar} width="140" height="140" />
+					 <p>{user.name}</p>
+					</PROFILE_BOX>
 					<ASK_BOX>
 						<TITLE> {askDetail.title} </TITLE>
 						<P> {askDetail.detail} </P>
