@@ -19,6 +19,7 @@ const ASK_BOX = styled.div`
 	margin-bottom: 8%;
 `;
 
+
 const TITLE = styled.h6`
 	font-size: 1.4rem;
 	padding-bottom: 7%;
