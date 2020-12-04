@@ -27,11 +27,11 @@ const TITLE = styled.h6`
 `;
 
 export default function PostedAsk() {
-	const [asks, setAsks] = useState([]);
+	const [asks, set_asks] = useState([]);
 
 	const history = useHistory();
-	const onTitle_click = () => {
-		history.push("/askdetails/:id");
+	const onTitle_click = (askId) => {
+		history.push(`/askdetails/${askId}`);
 	};
 
 	useEffect(() => {
@@ -40,12 +40,13 @@ export default function PostedAsk() {
 			.collection("ask")
 			.get()
 			.then((data) => {
-				const ASK_DATA = data.docs.map((doc) => {
+				const askData = data.docs.map((doc) => {
 					return doc.data();
 				});
-				setAsks(ASK_DATA);
+				set_asks(askData);
 			});
 	}, []);
+
 
 	return (
 		<>
@@ -53,7 +54,7 @@ export default function PostedAsk() {
 				{asks.map((ask) => {
 					return (
 						<ASK_BOX>
-							<TITLE onClick={onTitle_click}>{ask.title}</TITLE>
+							<TITLE onClick={() => onTitle_click(ask.askId)}>{ask.title}</TITLE>
 							<br />
 							<p>{ask.detail}</p>
 						</ASK_BOX>
