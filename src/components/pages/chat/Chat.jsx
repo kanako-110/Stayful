@@ -1,6 +1,7 @@
 import React from "react";
 import Faker from "faker";
 import Button from "../../atoms/Button";
+import SendField from "../../atoms/SendField";
 import styled from "styled-components";
 
 const H3 = styled.h6`
@@ -74,9 +75,9 @@ export default function Chat() {
 					<hr />
 				</MESSAGE_BOX>
 
-				<button>レビューする</button>
-				<button>解決</button>
-				<button>送信する</button>
+				<SendField />
+				<Button text="解決した" marginTop="2%" left="75%"/>
+				<Button text="レビュー" marginTop="2%"  left="86%"/>
 			</div>
 		</div>
 	);

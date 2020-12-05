@@ -1,27 +1,29 @@
-import React, {Component} from 'react';
+import React from "react";
+import TextField from "@material-ui/core/TextField";
+import styled from "styled-components";
+import SendButtons from "./SendButton";
+import Button from "./Button"
 
-import TextField from '@material-ui/core/TextField';
-import '../styles/TextInput.css';
-import SendButtons from './SendButton';
-
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+const WRAP = styled.form`
+	display: flex;
+	justify-content: center;
+	width: 60%;
+	margin-top: 5%;
+`;
 
 export default function SendField() {
-  render() {
-    return (
-      <React.Fragment>
-        <form className="wrap" noValidate autoComplete="off">
-          <TextField
-            id="standard-text"
-            label="メッセージを入力"
-            className="text"
-            margin="normal"
-          />
-          <SendButtons />
-        </form>
-      </React.Fragment>
-    );
-  }
+	return (
+		<React.Fragment>
+			<WRAP noValidate autoComplete="off">
+				<TextField
+					id="standard-text"
+					label="メッセージを入力"
+					className="text"
+					margin="normal"
+					fullWidth
+				/>
+				<SendButtons />
+			</WRAP>
+		</React.Fragment>
+	);
 }
-
