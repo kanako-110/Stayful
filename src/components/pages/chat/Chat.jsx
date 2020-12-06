@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import Faker from "faker";
 import Button from "../../atoms/Button";
 import SendField from "../../atoms/SendField";
@@ -32,20 +33,30 @@ const P = styled.p`
 `;
 
 export default function Chat() {
+	const messages = useSelector((state) => state.messages);
 	const avatar = Faker.image.people();
+
+	console.log(messages);
+
+	const render_message = () => {
+		messages.map((message) => {
+			return <P> {message.title} </P>;
+		});
+	};
 
 	return (
 		<div className="COLOR_POSITION" style={{ height: "150vh" }}>
 			<div className="ENTIRE_DIV">
 				<H3>Chat</H3>
-				<MESSAGE_BOX>
+				{render_message()}
+				{/* <MESSAGE_BOX>
 					<MESSAGE_INNER>
 						<div>
 							<img src={avatar} width="50" height="50" />
 						</div>
 						<div>
 							<P>kanako</P>
-							<P>大丈夫ですか</P>
+							{render_message()}
 						</div>
 					</MESSAGE_INNER>
 					<hr />
@@ -73,11 +84,11 @@ export default function Chat() {
 						</div>
 					</MESSAGE_INNER>
 					<hr />
-				</MESSAGE_BOX>
+				</MESSAGE_BOX> */}
 
 				<SendField />
-				<Button text="解決した" marginTop="2%" left="75%"/>
-				<Button text="レビュー" marginTop="2%"  left="86%"/>
+				<Button text="解決した" marginTop="2%" left="75%" />
+				<Button text="レビュー" marginTop="2%" left="86%" />
 			</div>
 		</div>
 	);
