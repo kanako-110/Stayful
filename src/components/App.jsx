@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import { AuthProvider } from "../firebase/AuthService";
+import firebase from "../firebase/firebase";
+import { fetch_messages } from "../reducks/chat/action";
+import { useDispatch } from "react-redux";
 import LoggedInRoute from "../firebase/LoggedInRoute";
 import Header from "./module/Header";
 import Home from "./pages/home";
@@ -21,6 +24,21 @@ import ShowProfile from "./pages/profile/ShowProfile";
 import Logout from "./pages/login/Logout";
 
 const App = () => {
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		firebase
+			.firestore()
+			.collection("messages")
+			.get()
+			.then((data) => {
+				const messageData = data.docs.map((doc) => {
+					return doc.data();
+				});
+				dispatch(fetch_messages(messageData));
+			});
+	}, []);
+
 	return (
 		<AuthProvider>
 			<Router>

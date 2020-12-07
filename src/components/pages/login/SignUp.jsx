@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import firebase from "../../../firebase/firebase";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -12,8 +13,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-
-
+import styled from "styled-components";
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -35,18 +35,35 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
+const ERROR = styled.p`
+	color: #ff4500;
+	//helperTextと同じに設定してある
+	margin-left: 14px;
+	margin-right: 14px;
+	line-height: 1.66;
+	font-size: 0.75rem;
+	letter-spacing: 0.03333em;
+`;
+
 export default function SignUp({ history }) {
 	const classes = useStyles();
-	const [name, setName] = useState("");
+	const { register, handleSubmit, errors } = useForm();
+	const [userName, setUserName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
-	const onForm_submit = (e) => {
-		e.preventDefault();
+	const onForm_submit = (data) => {
+		console.log(data);
 		firebase
 			.auth()
 			.createUserWithEmailAndPassword(email, password)
+			.then((response) => {
+				response.user.updateProfile({
+					displayName: userName,
+				});
+			})
 			.then(() => {
+				console.log("successfully signUp!")
 				history.push("/asklist");
 			})
 			.catch((err) => {
@@ -55,6 +72,26 @@ export default function SignUp({ history }) {
 		console.log(email);
 		console.log(password);
 	};
+
+	// const onForm_submit = (e) => {
+	// 	e.preventDefault();
+	// 	firebase
+	// 		.auth()
+	// 		.createUserWithEmailAndPassword(email, password)
+	// 		.then((response) => {
+	// 			response.user.updateProfile({
+	// 				displayName: userName,
+	// 			});
+	// 		})
+	// 		.then(() => {
+	// 			history.push("/asklist");
+	// 		})
+	// 		.catch((err) => {
+	// 			alert(err);
+	// 		});
+	// 	console.log(email);
+	// 	console.log(password);
+	// };
 
 	return (
 		<div style={{ padding: "9% 0", height: "95vh" }}>
@@ -67,22 +104,31 @@ export default function SignUp({ history }) {
 					<Typography component="h1" variant="h5">
 						Sign up
 					</Typography>
-					<form className={classes.form} noValidate onSubmit={onForm_submit}>
+
+					<form
+						className={classes.form}
+						noValidate
+						onSubmit={handleSubmit(onForm_submit)}
+					>
+						{/* <form className={classes.form} noValidate onSubmit={onForm_submit}> */}
 						<Grid container spacing={2}>
 							<Grid item xs={12} sm={14}>
 								<TextField
 									autoComplete="fname"
-									name="Name"
+									name="userName"
 									variant="outlined"
 									required
 									fullWidth
 									id="Name"
 									label=" Name"
 									autoFocus
-									value={name}
-									onChange={(e) => setName(e.target.value)}
+									value={userName}
+									onChange={(e) => setUserName(e.target.value)}
+									inputRef={register({ required: true })}
 								/>
+								{errors.userName && <ERROR>名前を入力してください</ERROR>}
 							</Grid>
+
 							<Grid item xs={12}>
 								<TextField
 									variant="outlined"
@@ -94,7 +140,11 @@ export default function SignUp({ history }) {
 									autoComplete="email"
 									value={email}
 									onChange={(e) => setEmail(e.target.value)}
+									inputRef={register({ required: true })}
 								/>
+								{errors.email && (
+									<ERROR>メールアドレスを入力してください</ERROR>
+								)}
 							</Grid>
 							<Grid item xs={12}>
 								<TextField
@@ -108,7 +158,9 @@ export default function SignUp({ history }) {
 									autoComplete="current-password"
 									value={password}
 									onChange={(e) => setPassword(e.target.value)}
+									inputRef={register({ required: true })}
 								/>
+								{errors.password && <ERROR>パスワードを入力してください</ERROR>}
 							</Grid>
 							<Grid item xs={12}>
 								<FormControlLabel
