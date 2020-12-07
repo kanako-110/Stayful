@@ -7,6 +7,8 @@ export const MessageReducer = (state = initialState, action) => {
 			return action.payload;
 		case Actions.CREATE_MESSAGE:
 			return [...state, action.payload];
+			case Actions.DELETE_MESSAGE:
+			return state.filter((message) => message !== action.payload);
 		default:
 			return state;
 	}

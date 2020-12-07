@@ -1,8 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { delete_message } from "../../../reducks/chat/action";
+import firebase from "../../../firebase/firebase";
 import Faker from "faker";
 import Button from "../../atoms/Button";
 import SendField from "../../atoms/SendField";
+import DeleteTwoToneIcon from "@material-ui/icons/DeleteTwoTone";
 import styled from "styled-components";
 
 const H3 = styled.h6`
@@ -11,6 +14,11 @@ const H3 = styled.h6`
 	color: #f5b47a;
 	font-size: 2.5rem;
 	font-family: Questrial, sans-serif;
+`;
+
+const IMG_TEXT_WRAPPER = styled.div`
+	display: flex;
+	width: 100%;
 `;
 
 const MESSAGE_BOX = styled.div`
@@ -23,12 +31,14 @@ const MESSAGE_INNER = styled.div`
 	// background-color: #ffffff;
 	margin-top: 2%;
 	height: auto;
-	width: 50%;
+	width: 70%;
 	display: flex;
+	justify-content: space-between;
 `;
 
 const TEXT_BOX = styled.div`
 	height: 50px;
+	width: 100%;
 	padding: 0px 3%;
 	display: flex;
 	flex-flow: column;
@@ -45,9 +55,28 @@ const TEXT = styled.p`
 `;
 
 export default function Chat() {
+	const dispatch = useDispatch();
 	const messages = useSelector((state) => state.messages);
 	const avatar = Faker.image.people();
 	console.log(messages.createdAt);
+
+	const onTrash_click = (message) => {
+		// ----画面上からmessage消す------//
+		dispatch(delete_message(message));
+
+		//----firebaseから消す-----//
+		firebase
+			.firestore()
+			.collection("messages")
+			.doc(message.messageId)
+			.delete()
+			.then(function () {
+				console.log("Document successfully deleted!");
+			})
+			.catch(function (error) {
+				console.error("Error removing document: ", error);
+			});
+	};
 
 	const messageTime = (message) => {
 		// firestoreからfetchのときはそもそも～時の形にする
@@ -59,8 +88,6 @@ export default function Chat() {
 					firestoreTime.getMonth() + 1
 				}/${firestoreTime.getDate()} ${firestoreTime.getHours()}:${firestoreTime.getMinutes()}`
 			);
-
-
 		} else {
 			// reduxの時はこれでok
 			const reduxTime = new Date(message.createdAt);
@@ -72,7 +99,6 @@ export default function Chat() {
 		}
 	};
 
-
 	return (
 		<div className="COLOR_POSITION" style={{ height: "150vh" }}>
 			<div className="ENTIRE_DIV">
@@ -81,16 +107,27 @@ export default function Chat() {
 					return (
 						<MESSAGE_BOX>
 							<MESSAGE_INNER>
-								<div>
-									<img src={avatar} width="50" height="50" />
+								<IMG_TEXT_WRAPPER>
+									<div>
+										<img src={avatar} width="50" height="50" />
+									</div>
+
+									<TEXT_BOX>
+										<P> {message.displayName} </P>
+										<TEXT> {message.text} </TEXT>
+										{messageTime(message)}
+									</TEXT_BOX>
+								</IMG_TEXT_WRAPPER>
+
+								<div style={{ textAlign: "center" }}>
+									<DeleteTwoToneIcon
+										color="action"
+										style={{ height: "50px" }}
+										onClick={() => onTrash_click(message)}
+									/>
 								</div>
-								<TEXT_BOX>
-									<P> {message.displayName} </P>
-									<TEXT> {message.text} </TEXT>
-									{messageTime(message)}
-								</TEXT_BOX>
 							</MESSAGE_INNER>
-							<hr />
+							<hr style={{ margin: "0" }} />
 						</MESSAGE_BOX>
 					);
 				})}
