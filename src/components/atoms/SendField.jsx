@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
+import firebase from "../../firebase/firebase";
+import shortid from "shortid";
+import { AuthContext } from "../../firebase/AuthService";
 import { create_message } from "../../reducks/chat/action";
+import { set_user } from "../../reducks/user/action";
 import TextField from "@material-ui/core/TextField";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
@@ -39,6 +43,7 @@ const ERROR = styled.p`
 
 export default function SendField() {
 	const classes = useStyles();
+	const user = useContext(AuthContext);
 	const { register, handleSubmit, errors } = useForm();
 	const dispatch = useDispatch();
 
@@ -47,8 +52,42 @@ export default function SendField() {
 	};
 
 	const onButton_click = (data) => {
-    console.log(data);
-    dispatch(create_message(data))
+		const messageId = shortid.generate();
+		console.log(data);
+		firebase
+			.firestore()
+			.collection("messages")
+			.doc(messageId)
+			.set({
+				messageId: messageId,
+				displayName: user.displayName,
+				text: data.text,
+				createdAt: new Date(),
+				getday: new Date().getDay(),
+			})
+			.then(function () {
+				console.log("Document successfully written!");
+			})
+			.catch(function (error) {
+				console.error("Error writing document: ", error);
+			});
+
+		dispatch(
+			create_message({
+				messageId: messageId,
+				displayName: user.displayName,
+				text: data.text,
+				createdAt: new Date(),
+				getday: new Date().getDay(),
+			})
+		);
+		dispatch(set_user(user));
+	};
+
+	const displayName = () => {
+		if (user) {
+			return <p>{user.displayName}</p>;
+		}
 	};
 
 	return (
