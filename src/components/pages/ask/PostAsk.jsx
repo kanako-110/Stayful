@@ -35,13 +35,12 @@ const CONTAIN_PROFILE_POSTBOX = styled.div`
 
 const PROFILE_BOX = styled.div`
 	background-color: #ffffff;
-	width: 30%;
+	width: 25%;
 	height: 28vh;
 `;
 
 const POST_BOX = styled.div`
-	height: 90vh;
-	width: 100%;
+	height: 85vh;
 	background-color: #ffffff;
 `;
 
@@ -91,7 +90,7 @@ export default function PostAsk() {
 					<PROFILE_BOX></PROFILE_BOX>
 
 					{/*----- pegaTitle and PostBox----- */}
-					<div>
+					<div style={{ width: "65%" }}>
 						{/*---- ページタイトル----- */}
 						<H3>相談を投稿する</H3>
 						{/* -----投稿ボックス----- */}
@@ -138,7 +137,7 @@ export default function PostAsk() {
 										/>
 									</div>
 								</div>
-								<Button text="投稿する" top="88%" left="76%" />
+								<Button text="投稿する" left="86%"  />
 							</form>
 						</POST_BOX>
 					</div>
