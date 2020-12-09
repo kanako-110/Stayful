@@ -30,6 +30,7 @@ const App = () => {
 		firebase
 			.firestore()
 			.collection("messages")
+			.orderBy("createdAt", "asc")
 			.get()
 			.then((data) => {
 				const messageData = data.docs.map((doc) => {
@@ -41,7 +42,6 @@ const App = () => {
 						text: doc.data().text,
 					};
 				});
-				console.log(messageData);
 				dispatch(fetch_messages(messageData));
 			});
 	}, []);
