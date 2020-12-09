@@ -33,8 +33,15 @@ const App = () => {
 			.get()
 			.then((data) => {
 				const messageData = data.docs.map((doc) => {
-					return doc.data();
+					return {
+						createdAt: new Date(doc.data().createdAt.seconds * 1000),
+						displayName: doc.data().displayName,
+						getday: doc.data().getday,
+						messageId: doc.data().messageId,
+						text: doc.data().text,
+					};
 				});
+				console.log(messageData);
 				dispatch(fetch_messages(messageData));
 			});
 	}, []);

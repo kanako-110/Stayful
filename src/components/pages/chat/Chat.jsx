@@ -31,7 +31,7 @@ const MESSAGE_INNER = styled.div`
 	// background-color: #ffffff;
 	margin-top: 2%;
 	height: auto;
-	width: 70%;
+	width: 100%;
 	display: flex;
 	justify-content: space-between;
 `;
@@ -53,6 +53,10 @@ const P = styled.p`
 const TEXT = styled.p`
 	font-size: 1.2rem;
 `;
+
+const TIME = styled.p `
+font-size: 0.6rem
+`
 
 export default function Chat() {
 	const dispatch = useDispatch();
@@ -79,24 +83,14 @@ export default function Chat() {
 	};
 
 	const messageTime = (message) => {
-		// firestoreからfetchのときはそもそも～時の形にする
-		// if(-secondsがあるとき=firestoreの時間をとってきているとき)
-		if (message.createdAt.seconds) {
-			const firestoreTime = new Date(message.createdAt.seconds * 1000);
-			console.log(
-				`firestore ${firestoreTime.getFullYear()}/${
-					firestoreTime.getMonth() + 1
-				}/${firestoreTime.getDate()} ${firestoreTime.getHours()}:${firestoreTime.getMinutes()}`
-			);
-		} else {
-			// reduxの時はこれでok
-			const reduxTime = new Date(message.createdAt);
-			console.log(
-				`redux ${reduxTime.getFullYear()}/${
-					reduxTime.getMonth() + 1
-				}/${reduxTime.getDate()} ${reduxTime.getHours()}:${reduxTime.getMinutes()}`
-			);
-		}
+		return (
+			<TIME>
+				{message.createdAt.getFullYear()}/{message.createdAt.getMonth() + 1}/
+				{message.createdAt.getDate()} {message.createdAt.getHours()}:
+				{message.createdAt.getMinutes()}
+			</TIME>
+		);
+		
 	};
 
 	return (

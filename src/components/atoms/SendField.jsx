@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import firebase from "../../firebase/firebase";
@@ -44,8 +44,9 @@ const ERROR = styled.p`
 export default function SendField() {
 	const classes = useStyles();
 	const user = useContext(AuthContext);
-	const { register, handleSubmit, errors } = useForm();
+	const { register, handleSubmit, errors, reset } = useForm();
 	const dispatch = useDispatch();
+	// const [text, setText] = useState("")
 
 	const onForm_submit = (e) => {
 		e.preventDefault();
@@ -82,13 +83,9 @@ export default function SendField() {
 			})
 		);
 		dispatch(set_user(user));
+		reset()
 	};
 
-	const displayName = () => {
-		if (user) {
-			return <p>{user.displayName}</p>;
-		}
-	};
 
 	return (
 		<form onSubmit={onForm_submit}>
