@@ -54,7 +54,6 @@ export default function SendField() {
 
 	const onButton_click = (data) => {
 		const messageId = shortid.generate();
-		console.log(data);
 		firebase
 			.firestore()
 			.collection("messages")

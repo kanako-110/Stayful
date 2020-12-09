@@ -19,18 +19,16 @@ const H3 = styled.h6`
 const IMG_TEXT_WRAPPER = styled.div`
 	display: flex;
 	width: 100%;
+	
 `;
 
 const MESSAGE_BOX = styled.div`
 	width: 100%;
 	// background-color: #c0c0c0;
-	height: 10vh;
 `;
 
 const MESSAGE_INNER = styled.div`
-	// background-color: #ffffff;
 	margin-top: 2%;
-	height: auto;
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
@@ -39,7 +37,8 @@ const MESSAGE_INNER = styled.div`
 const TEXT_BOX = styled.div`
 	height: 50px;
 	width: 100%;
-	padding: 0px 3%;
+	padding-left: 3%;
+	padding-bottom: 1%;
 	display: flex;
 	flex-flow: column;
 	justify-content: space-between;
@@ -48,21 +47,23 @@ const TEXT_BOX = styled.div`
 const P = styled.p`
 	width: 100%;
 	font-size: 0.9rem;
+	padding-bottom: 1%
 `;
 
 const TEXT = styled.p`
-	font-size: 1.2rem;
+	font-size: 1.1rem;
+	padding-bottom: 1%;
 `;
 
 const TIME = styled.p `
-font-size: 0.6rem
+font-size: 0.6rem;
+// padding-bottom: 1%;
 `
 
 export default function Chat() {
 	const dispatch = useDispatch();
 	const messages = useSelector((state) => state.messages);
 	const avatar = Faker.image.people();
-	console.log(messages.createdAt);
 
 	const onTrash_click = (message) => {
 		// ----画面上からmessage消す------//
@@ -121,10 +122,11 @@ export default function Chat() {
 									/>
 								</div>
 							</MESSAGE_INNER>
-							<hr style={{ margin: "0" }} />
+									<hr style={{ borderTop: "1px solid #756e57" }} />
 						</MESSAGE_BOX>
 					);
 				})}
+				
 
 				<SendField />
 				<Button text="解決した" marginTop="2%" left="75%" />
