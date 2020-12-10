@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { delete_message } from "../../../reducks/chat/action";
 import { fetch_messages } from "../../../reducks/chat/action";
 import firebase from "../../../firebase/firebase";
@@ -46,10 +46,15 @@ const TEXT_BOX = styled.div`
 	justify-content: space-between;
 `;
 
-const P = styled.p`
-	width: 100%;
+const NAME = styled.p`
+  // width: 10%;
+	display: inline-block;
 	font-size: 0.9rem;
 	padding-bottom: 1%;
+	&:hover {
+		color: "#333333";
+		background-color: rgb(57 38 19 / 7%);
+	}
 `;
 
 const TEXT = styled.p`
@@ -67,7 +72,6 @@ export default function Chat() {
 	const dispatch = useDispatch();
 	const messages = useSelector((state) => state.messages);
 	const avatar = Faker.image.people();
-
 
 	useEffect(() => {
 		firebase
@@ -109,6 +113,12 @@ export default function Chat() {
 			});
 	};
 
+	const history = useHistory();
+	const onUser_click = (displayName) => {
+		console.log(displayName);
+		history.push(`/yourprofile/${displayName}`);
+	};
+
 	const messageTime = (message) => {
 		return (
 			<TIME>
@@ -133,7 +143,12 @@ export default function Chat() {
 									</div>
 
 									<TEXT_BOX>
-										<P> {message.displayName} </P>
+										<span>
+
+										<NAME onClick={() => onUser_click(message.displayName)}>
+											{message.displayName}
+										</NAME>
+										</span>
 										<TEXT> {message.text} </TEXT>
 										{messageTime(message)}
 									</TEXT_BOX>

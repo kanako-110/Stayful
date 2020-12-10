@@ -110,7 +110,7 @@ export default function SelectedMenu() {
 										onKeyDown={handleListKeyDown}
 									>
 										<Link
-											to="/yourprofile"
+											to="/yourprofile/:name"
 											style={{
 												color: "#333333",
 												textDecoration: "none",
