@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { fetch_asks} from "../../../reducks/ask/action"
 import firebase from "../../../firebase/firebase";
 import styled from "styled-components";
 
@@ -28,6 +30,8 @@ const TITLE = styled.h6`
 
 export default function PostedAsk() {
 	const [asks, set_asks] = useState([]);
+	const dispatch = useDispatch();
+
 
 	const history = useHistory();
 	const onTitle_click = (askId) => {
@@ -43,6 +47,7 @@ export default function PostedAsk() {
 				const askData = data.docs.map((doc) => {
 					return doc.data();
 				});
+				dispatch(fetch_asks(askData))
 				set_asks(askData);
 			});
 	}, []);
@@ -53,7 +58,7 @@ export default function PostedAsk() {
 			<CONTAINER>
 				{asks.map((ask) => {
 					return (
-						<ASK_BOX>
+						<ASK_BOX key={ask.askId}>
 							<TITLE onClick={() => onTitle_click(ask.askId)}>{ask.title}</TITLE>
 							<br />
 							<p>{ask.detail}</p>

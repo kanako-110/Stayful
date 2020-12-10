@@ -1,6 +1,8 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { create_ask} from "../../../reducks/ask/action";
 import shortid from "shortid";
 import firebase from "../../../firebase/firebase";
 import styled from "styled-components";
@@ -57,6 +59,7 @@ const ERROR = styled.p`
 
 export default function PostAsk() {
 	const classes = useStyles();
+	const dispatch = useDispatch();
 	const history = useHistory();
 	const { register, handleSubmit, errors } = useForm();
 
@@ -75,6 +78,15 @@ export default function PostAsk() {
 				getday: new Date().getDay(),
 			})
 			.then(function () {
+				dispatch(
+					create_ask({
+						askId: askId,
+						title: data.title,
+						detail: data.detail,
+						createdAt: new Date(),
+						getday: new Date().getDay(),
+					})
+				);
 				console.log("Document successfully written!");
 				history.push("/asklist");
 			})

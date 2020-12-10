@@ -1,6 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
 import firebase from "../../firebase/firebase";
 import shortid from "shortid";
 import { AuthContext } from "../../firebase/AuthService";
@@ -43,6 +44,7 @@ const ERROR = styled.p`
 
 export default function SendField() {
 	const classes = useStyles();
+	const { id } = useParams();
 	const user = useContext(AuthContext);
 	const { register, handleSubmit, errors, reset } = useForm();
 	const dispatch = useDispatch();
@@ -64,6 +66,7 @@ export default function SendField() {
 				text: data.text,
 				createdAt: new Date(),
 				getday: new Date().getDay(),
+				pageId: id,
 			})
 			.then(function () {
 				console.log("Document successfully written!");
@@ -79,12 +82,12 @@ export default function SendField() {
 				text: data.text,
 				createdAt: new Date(),
 				getday: new Date().getDay(),
+				pageId: id,
 			})
 		);
 		dispatch(set_user(user));
-		reset()
+		reset();
 	};
-
 
 	return (
 		<form onSubmit={onForm_submit}>

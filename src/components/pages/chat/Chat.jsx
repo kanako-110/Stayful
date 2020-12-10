@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 import { delete_message } from "../../../reducks/chat/action";
+import { fetch_messages } from "../../../reducks/chat/action";
 import firebase from "../../../firebase/firebase";
 import Faker from "faker";
 import Button from "../../atoms/Button";
 import SendField from "../../atoms/SendField";
 import DeleteTwoToneIcon from "@material-ui/icons/DeleteTwoTone";
 import styled from "styled-components";
+import { CropPortrait } from "@material-ui/icons";
 
 const H3 = styled.h6`
 	text-align: center;
@@ -19,7 +22,6 @@ const H3 = styled.h6`
 const IMG_TEXT_WRAPPER = styled.div`
 	display: flex;
 	width: 100%;
-	
 `;
 
 const MESSAGE_BOX = styled.div`
@@ -47,7 +49,7 @@ const TEXT_BOX = styled.div`
 const P = styled.p`
 	width: 100%;
 	font-size: 0.9rem;
-	padding-bottom: 1%
+	padding-bottom: 1%;
 `;
 
 const TEXT = styled.p`
@@ -55,15 +57,39 @@ const TEXT = styled.p`
 	padding-bottom: 1%;
 `;
 
-const TIME = styled.p `
-font-size: 0.6rem;
-// padding-bottom: 1%;
-`
+const TIME = styled.p`
+	font-size: 0.6rem;
+	// padding-bottom: 1%;
+`;
 
 export default function Chat() {
+	const { id } = useParams();
 	const dispatch = useDispatch();
 	const messages = useSelector((state) => state.messages);
 	const avatar = Faker.image.people();
+
+
+	useEffect(() => {
+		firebase
+			.firestore()
+			.collection("messages")
+			.where("pageId", "==", id)
+			.orderBy("createdAt", "asc")
+			.get()
+			.then((data) => {
+				const messageData = data.docs.map((doc) => {
+					return {
+						createdAt: new Date(doc.data().createdAt.seconds * 1000),
+						displayName: doc.data().displayName,
+						getday: doc.data().getday,
+						messageId: doc.data().messageId,
+						text: doc.data().text,
+						pageId: id,
+					};
+				});
+				dispatch(fetch_messages(messageData));
+			});
+	}, []);
 
 	const onTrash_click = (message) => {
 		// ----画面上からmessage消す------//
@@ -91,7 +117,6 @@ export default function Chat() {
 				{message.createdAt.getMinutes()}
 			</TIME>
 		);
-		
 	};
 
 	return (
@@ -100,7 +125,7 @@ export default function Chat() {
 				<H3>Chat</H3>
 				{messages.map((message) => {
 					return (
-						<MESSAGE_BOX>
+						<MESSAGE_BOX key={message.messageId}>
 							<MESSAGE_INNER>
 								<IMG_TEXT_WRAPPER>
 									<div>
@@ -122,11 +147,10 @@ export default function Chat() {
 									/>
 								</div>
 							</MESSAGE_INNER>
-									<hr style={{ borderTop: "1px solid #756e57" }} />
+							<hr style={{ borderTop: "1px solid #756e57" }} />
 						</MESSAGE_BOX>
 					);
 				})}
-				
 
 				<SendField />
 				<Button text="解決した" marginTop="2%" left="75%" />
