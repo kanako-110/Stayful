@@ -26,25 +26,25 @@ import Logout from "./pages/login/Logout";
 const App = () => {
 	const dispatch = useDispatch();
 
-	useEffect(() => {
-		firebase
-			.firestore()
-			.collection("messages")
-			.orderBy("createdAt", "asc")
-			.get()
-			.then((data) => {
-				const messageData = data.docs.map((doc) => {
-					return {
-						createdAt: new Date(doc.data().createdAt.seconds * 1000),
-						displayName: doc.data().displayName,
-						getday: doc.data().getday,
-						messageId: doc.data().messageId,
-						text: doc.data().text,
-					};
-				});
-				dispatch(fetch_messages(messageData));
-			});
-	}, []);
+	// useEffect(() => {
+	// 	firebase
+	// 		.firestore()
+	// 		.collection("messages")
+	// 		.orderBy("createdAt", "asc")
+	// 		.get()
+	// 		.then((data) => {
+	// 			const messageData = data.docs.map((doc) => {
+	// 				return {
+	// 					createdAt: new Date(doc.data().createdAt.seconds * 1000),
+	// 					displayName: doc.data().displayName,
+	// 					getday: doc.data().getday,
+	// 					messageId: doc.data().messageId,
+	// 					text: doc.data().text,
+	// 				};
+	// 			});
+	// 			dispatch(fetch_messages(messageData));
+	// 		});
+	// }, []);
 
 	return (
 		<AuthProvider>
@@ -56,7 +56,7 @@ const App = () => {
 					<Route path="/login" exact component={LogIn} />
 					<Route path="/signup" exact component={SignUp} />
 					<Route path="/chatlist" exact component={ChatList} />
-					<Route path="/chat" exact component={Chat} />
+					<Route path="/chat/:id" exact component={Chat} />
 					<Route path="/profile" exact component={Profile} />
 					<Route path="/signout" exact component={SignOut} />
 					<Route path="/about" exact component={About} />

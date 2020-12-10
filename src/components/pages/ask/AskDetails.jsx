@@ -19,7 +19,6 @@ const ASK_BOX = styled.div`
 	margin-bottom: 8%;
 `;
 
-
 const TITLE = styled.h6`
 	font-size: 1.4rem;
 	padding-bottom: 7%;
@@ -42,16 +41,14 @@ const AskDetails = () => {
 	const [askDetail, set_askDetail] = useState("");
 
 
-
-	
-
 	const user = {
 		name: Faker.internet.userName(),
 		avatar: Faker.image.people(),
 	};
 
-	useEffect(() => {
+	const messageLink = `/chat/${id}`
 
+	useEffect(() => {
 		firebase
 			.firestore()
 			.collection("ask")
@@ -69,8 +66,13 @@ const AskDetails = () => {
 			<div className="ENTIRE_DIV">
 				<POSITION_CONTAINER>
 					<PROFILE_BOX>
-					 <img  style= {{paddingBottom: "20px"}}  src={user.avatar} width="140" height="140" />
-					 <p>{user.name}</p>
+						<img
+							style={{ paddingBottom: "20px" }}
+							src={user.avatar}
+							width="140"
+							height="140"
+						/>
+						<p>{user.name}</p>
 					</PROFILE_BOX>
 					<ASK_BOX>
 						<TITLE> {askDetail.title} </TITLE>
@@ -82,7 +84,7 @@ const AskDetails = () => {
 						text="メッセージでHELPする"
 						top="85%"
 						left="76.5%"
-						link="/chat"
+						link= {messageLink}
 					/>
 				</div>
 			</div>
