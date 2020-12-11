@@ -1,4 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
+import shortid from "shortid";
+import firebase from "../../../firebase/firebase";
+import { AuthContext } from "../../../firebase/AuthService";
 import Avatar from "@material-ui/core/Avatar"; //ひとまずのimport
 import Button from "../../atoms/Button";
 import styled from "styled-components";
@@ -46,8 +51,47 @@ const EDIT_BOX = styled.div`
 	padding: 1% 2%;
 `;
 
+const ERROR = styled.p`
+	color: #ff4500;
+	//helperTextと同じに設定してある
+	margin-left: 14px;
+	margin-right: 14px;
+	font-size: 0.75rem;
+	letter-spacing: 0.03333em;
+`;
+
 export default function EditProfile() {
 	const classes = useStyles();
+	const history = useHistory();
+	const user = useContext(AuthContext);
+	const { register, handleSubmit, errors } = useForm();
+
+
+	const onForm_submit = (data) => {
+		console.log(data);
+		const userId = shortid.generate();
+
+		firebase
+			.firestore()
+			.collection("userProfile")
+			.doc(userId)
+			.set({
+				userId: userId,
+				displayName: data.displayName,
+				language: data.language,
+				country: data.country,
+				comment: data.comment,
+				createdAt: new Date(),
+			})
+			.then(function () {
+				console.log("Document successfully written!");
+				history.push(`/yourprofile/${user.displayName}`);
+			})
+			.catch(function (error) {
+				console.error("Error writing document: ", error);
+			});
+	};
+
 	return (
 		<div className="COLOR_POSITION" style={{ height: "80vh" }}>
 			<div className="ENTIRE_DIV">
@@ -58,12 +102,14 @@ export default function EditProfile() {
 					<div style={{ width: "80%" }}>
 						<H3>プロフィールを編集する</H3>
 						<EDIT_BOX>
-							<div>
+							<form onSubmit={handleSubmit(onForm_submit)}>
 								<TextField
 									className={classes.margin}
+									name="displayName"
 									id="input-with-icon-textfield"
 									label="ユーザーネーム"
-									style={{ width: "45%" }}
+									value={user.displayName}
+									style={{ width: "60%" }}
 									InputProps={{
 										startAdornment: (
 											<InputAdornment position="start">
@@ -71,13 +117,15 @@ export default function EditProfile() {
 											</InputAdornment>
 										),
 									}}
+									inputRef={register({ required: true })}
 								/>
 								<br />
 								<TextField
 									className={classes.margin}
+									name="language"
 									id="input-with-icon-textfield"
 									label="話せる言語"
-									style={{ width: "45%" }}
+									style={{ width: "60%" }}
 									InputProps={{
 										startAdornment: (
 											<InputAdornment position="start">
@@ -85,14 +133,17 @@ export default function EditProfile() {
 											</InputAdornment>
 										),
 									}}
+									inputRef={register({ required: true })}
 								/>
+								{errors.language && <ERROR>言語を入力してください</ERROR>}
 								<br />
 								<TextField
 									className={classes.margin}
 									id="input-with-icon-textfield"
-									label="精通している国"
-									helperText="(住んだことのある国や、旅行したことのある国など)"
-									style={{ width: "45%" }}
+									name="country"
+									label="精通している国 (住んだことのある国や、旅行したことのある国など)"
+									// helperText="(住んだことのある国や、旅行したことのある国など)"
+									style={{ width: "60%" }}
 									InputProps={{
 										startAdornment: (
 											<InputAdornment position="start">
@@ -100,32 +151,30 @@ export default function EditProfile() {
 											</InputAdornment>
 										),
 									}}
+									inputRef={register({ required: true })}
 								/>
+								{errors.country && <ERROR>国を入力してください</ERROR>}
+
 								<TextField
-									name="detail"
+									name="comment"
 									id="outlined-full-width"
 									label="ひとこと"
 									helperText="(あなたの性格や、得意分野などを書いておくとAskerから高評価を得やすいです。)"
-									style={{ margin: 8, width: "60%" }}
+									style={{ margin: 8, width: "70%" }}
 									multiline
-									rows={7}
+									rows={5}
 									margin="normal"
 									InputLabelProps={{
 										shrink: true,
 									}}
 									variant="outlined"
-									// inputRef={register({ required: true })}
+									inputRef={register}
 								/>
-							</div>
+								<Button text="変更する" left="86%" marginTop="20%" />
+							</form>
 						</EDIT_BOX>
 					</div>
 				</PROFILE_EDITBOX>
-				<Button
-					text="変更する"
-					left="86%"
-					marginTop="1%"
-					link="/yourprofile/:name"
-				/>
 			</div>
 		</div>
 	);

@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Link } from "react-router-dom";
 import firebase from "../../firebase/firebase";
+import { AuthContext } from "../../firebase/AuthService";
 import Button from "@material-ui/core/Button";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Grow from "@material-ui/core/Grow";
@@ -22,8 +23,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SelectedMenu() {
 	const classes = useStyles();
+	const user = useContext(AuthContext);
 	const [open, setOpen] = React.useState(false);
 	const anchorRef = React.useRef(null);
+	const profileLink =  `/yourprofile/${user.displayName}`
 
 	const handleToggle = () => {
 		setOpen((prevOpen) => !prevOpen);
@@ -110,7 +113,7 @@ export default function SelectedMenu() {
 										onKeyDown={handleListKeyDown}
 									>
 										<Link
-											to="/yourprofile/:name"
+											to= {profileLink}
 											style={{
 												color: "#333333",
 												textDecoration: "none",
