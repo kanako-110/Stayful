@@ -66,7 +66,6 @@ export default function EditProfile() {
 	const user = useContext(AuthContext);
 	const { register, handleSubmit, errors } = useForm();
 
-
 	const onForm_submit = (data) => {
 		console.log(data);
 		const userId = shortid.generate();
@@ -74,7 +73,7 @@ export default function EditProfile() {
 		firebase
 			.firestore()
 			.collection("userProfile")
-			.doc(userId)
+			.doc(data.displayName)
 			.set({
 				userId: userId,
 				displayName: data.displayName,
@@ -83,7 +82,7 @@ export default function EditProfile() {
 				comment: data.comment,
 				createdAt: new Date(),
 			})
-			.then(function () {
+			.then((doc) => {
 				console.log("Document successfully written!");
 				history.push(`/yourprofile/${user.displayName}`);
 			})
@@ -108,7 +107,7 @@ export default function EditProfile() {
 									name="displayName"
 									id="input-with-icon-textfield"
 									label="ユーザーネーム"
-									value={user.displayName}
+									value={user ? user.displayName : ""}
 									style={{ width: "60%" }}
 									InputProps={{
 										startAdornment: (
