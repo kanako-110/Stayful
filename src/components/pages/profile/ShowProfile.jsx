@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../../firebase/AuthService";
 import firebase from "../../../firebase/firebase";
 import Button from "../../atoms/Button";
@@ -51,158 +51,37 @@ export default function ShowProfile() {
 	const classes = useStyles();
 	const user = useContext(AuthContext);
 	const history = useHistory();
-	const { name } = useParams();
-	// const link = { user ? `/editprofile/${user.displayName}`: ""};
 	const [profilesData, setProfilesData] = useState([]);
 
-	const onButton_click = () => {
-		history.push(`/editprofile/${user.displayName}`);
-	};
+	useEffect(() => {
+		if (user) {
+			firebase
+				.firestore()
+				.collection("userProfile")
+				.where("userId", "==", user.uid)
+				.get()
+				.then((data) => {
+					const response = data.docs.map((doc) => {
+						return doc.data();
+					});
+					setProfilesData(response);
+				});
+		}
+	}, [user]);
 
 	const editButton = () => {
-		if (user && user.displayName === name) {
+		if (user && profilesData[0] && user.uid === profilesData[0].userId) {
 			return (
 				<div onClick={onButton_click}>
-					<Button
-						text="プロフィールを編集する"
-						left="76%"
-						marginTop="5%"
-					/>
+					<Button text="プロフィールを編集する" left="76%" marginTop="5%" />
 				</div>
 			);
 		}
 	};
 
-	useEffect(() => {
-		firebase
-			.firestore()
-			.collection("userProfile")
-			.where("displayName", "==", name)
-			.get()
-			.then((data) => {
-				const response = data.docs.map((doc) => {
-					return doc.data();
-				});
-				setProfilesData(response);
-			});
-	}, []);
-
-	const display_deskTop = () => {
-		if(setProfilesData){
-				<div className="COLOR_POSITION" style={{ height: "80vh" }}>
-			<div className="ENTIRE_DIV">
-				<PROFILE_EDITBOX>
-					<div>
-						<Avatar src="/broken-image.jpg" className={classes.large} />
-					</div>
-					<div style={{ width: "80%" }}>
-						<H3>プロフィール</H3>
-						{profilesData.map((profileData) => {
-							return (
-								<PROFILE_BOX>
-									<form>
-										<TextField
-											className={classes.margin}
-											disabled
-											name="displayName"
-											id="input-with-icon-textfield"
-											label="ユーザーネーム"
-											value={user ? user.displayName : ""}
-											style={{ width: "60%" }}
-											InputProps={{
-												classes: {
-													root: classes.rootTxt,
-													disabled: classes.disabled,
-												},
-												startAdornment: (
-													<InputAdornment position="start">
-														<AccountCircle />
-													</InputAdornment>
-												),
-											}}
-										/>
-										<br />
-										<TextField
-											className={classes.margin}
-											disabled
-											name="language"
-											id="input-with-icon-textfield"
-											label="話せる言語"
-											value={profileData.language}
-											style={{ width: "60%" }}
-											InputProps={{
-												classes: {
-													root: classes.rootTxt,
-													disabled: classes.disabled,
-												},
-												startAdornment: (
-													<InputAdornment position="start">
-														<TranslateIcon />
-													</InputAdornment>
-												),
-											}}
-										/>
-										<br />
-										<TextField
-											className={classes.margin}
-											disabled
-											id="input-with-icon-textfield"
-											name="country"
-											label="精通している国 (住んだことのある国や、旅行したことのある国など)"
-											value={profileData.country}
-											// helperText="(住んだことのある国や、旅行したことのある国など)"
-											style={{ width: "60%" }}
-											InputProps={{
-												classes: {
-													root: classes.rootTxt,
-													disabled: classes.disabled,
-												},
-												startAdornment: (
-													<InputAdornment position="start">
-														<PublicIcon />
-													</InputAdornment>
-												),
-											}}
-										/>
-
-										<TextField
-											className={classes.margin}
-											disabled
-											id="outlined-full-width"
-											name="comment"
-											label="ひとこと"
-											value={profileData.comment}
-											style={{ width: "70%", marginTop: "2%" }}
-											multiline
-											rows={5}
-											variant="outlined"
-											InputProps={{
-												classes: {
-													root: classes.rootTxt,
-													disabled: classes.disabled,
-												},
-											}}
-										/>
-										{editButton()}
-										{/* <div onClick={onButton_click}>
-											<Button
-												text="プロフィールを編集する"
-												// link={user ? "/editprofile/ " + user.displayName : null}
-												left="76%"
-												marginTop="5%"
-											/>
-										</div > */}
-									</form>
-								</PROFILE_BOX>
-							);
-						})}
-					</div>
-				</PROFILE_EDITBOX>
-			</div>
-		</div>
-
-		}
-	}
+	const onButton_click = () => {
+		history.push(`/editprofile/${user.displayName}`);
+	};
 
 	return (
 		<div className="COLOR_POSITION" style={{ height: "80vh" }}>
@@ -213,105 +92,110 @@ export default function ShowProfile() {
 					</div>
 					<div style={{ width: "80%" }}>
 						<H3>プロフィール</H3>
-						{profilesData.map((profileData) => {
-							return (
-								<PROFILE_BOX>
-									<form>
-										<TextField
-											className={classes.margin}
-											disabled
-											name="displayName"
-											id="input-with-icon-textfield"
-											label="ユーザーネーム"
-											value={user ? user.displayName : ""}
-											style={{ width: "60%" }}
-											InputProps={{
-												classes: {
-													root: classes.rootTxt,
-													disabled: classes.disabled,
-												},
-												startAdornment: (
-													<InputAdornment position="start">
-														<AccountCircle />
-													</InputAdornment>
-												),
-											}}
-										/>
-										<br />
-										<TextField
-											className={classes.margin}
-											disabled
-											name="language"
-											id="input-with-icon-textfield"
-											label="話せる言語"
-											value={profileData.language}
-											style={{ width: "60%" }}
-											InputProps={{
-												classes: {
-													root: classes.rootTxt,
-													disabled: classes.disabled,
-												},
-												startAdornment: (
-													<InputAdornment position="start">
-														<TranslateIcon />
-													</InputAdornment>
-												),
-											}}
-										/>
-										<br />
-										<TextField
-											className={classes.margin}
-											disabled
-											id="input-with-icon-textfield"
-											name="country"
-											label="精通している国 (住んだことのある国や、旅行したことのある国など)"
-											value={profileData.country}
-											// helperText="(住んだことのある国や、旅行したことのある国など)"
-											style={{ width: "60%" }}
-											InputProps={{
-												classes: {
-													root: classes.rootTxt,
-													disabled: classes.disabled,
-												},
-												startAdornment: (
-													<InputAdornment position="start">
-														<PublicIcon />
-													</InputAdornment>
-												),
-											}}
-										/>
+						<PROFILE_BOX>
+							<form>
+								<TextField
+									className={classes.margin}
+									disabled
+									name="displayName"
+									id="input-with-icon-textfield"
+									label="ユーザーネーム"
+									style={{ width: "60%" }}
+									InputProps={{
+										classes: {
+											root: classes.rootTxt,
+											disabled: classes.disabled,
+										},
+										startAdornment: (
+											<InputAdornment position="start">
+												<AccountCircle />
+											</InputAdornment>
+										),
+									}}
+									value={user ? user.displayName : ""}
+								/>
+								<br />
+								<TextField
+									className={classes.margin}
+									disabled
+									name="language"
+									id="input-with-icon-textfield"
+									label="話せる言語"
+									style={{ width: "60%" }}
+									InputProps={{
+										classes: {
+											root: classes.rootTxt,
+											disabled: classes.disabled,
+										},
+										startAdornment: (
+											<InputAdornment position="start">
+												<TranslateIcon />
+											</InputAdornment>
+										),
+									}}
+									// プロフィール投稿内容があるときのみ、それを表示。ないなら""
+									value={
+										profilesData
+											? profilesData.map((profileData) => {
+													return profileData.language;
+											  })
+											: ""
+									}
+								/>
+								<br />
+								<TextField
+									className={classes.margin}
+									disabled
+									id="input-with-icon-textfield"
+									name="country"
+									label="精通している国 (住んだことのある国や、旅行したことのある国など)"
+									style={{ width: "60%" }}
+									InputProps={{
+										classes: {
+											root: classes.rootTxt,
+											disabled: classes.disabled,
+										},
+										startAdornment: (
+											<InputAdornment position="start">
+												<PublicIcon />
+											</InputAdornment>
+										),
+									}}
+									value={
+										profilesData
+											? profilesData.map((profileData) => {
+													return profileData.country;
+											  })
+											: ""
+									}
+								/>
 
-										<TextField
-											className={classes.margin}
-											disabled
-											id="outlined-full-width"
-											name="comment"
-											label="ひとこと"
-											value={profileData.comment}
-											style={{ width: "70%", marginTop: "2%" }}
-											multiline
-											rows={5}
-											variant="outlined"
-											InputProps={{
-												classes: {
-													root: classes.rootTxt,
-													disabled: classes.disabled,
-												},
-											}}
-										/>
-										{/* {editButton()} */}
-										<div onClick={onButton_click}>
-											<Button
-												text="プロフィールを編集する"
-												// link={user ? "/editprofile/ " + user.displayName : null}
-												left="76%"
-												marginTop="5%"
-											/>
-										</div >
-									</form>
-								</PROFILE_BOX>
-							);
-						})}
+								<TextField
+									disabled
+									id="outlined-full-width"
+									name="comment"
+									label="ひとこと"
+									style={{ width: "70%", marginTop: "2%" }}
+									multiline
+									rows={5}
+									variant="outlined"
+									InputProps={{
+										classes: {
+											root: classes.rootTxt,
+											disabled: classes.disabled,
+										},
+									}}
+									value={
+										profilesData
+											? profilesData.map((profileData) => {
+													return profileData.comment;
+											  })
+											: ""
+									}
+								/>
+								<span>{editButton()}</span>
+							</form>
+						</PROFILE_BOX>
 					</div>
 				</PROFILE_EDITBOX>
 			</div>

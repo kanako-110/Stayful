@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import { AuthProvider } from "../firebase/AuthService";
-import LoggedInRoute from "../firebase/LoggedInRoute";
 import Header from "./module/Header";
 import Home from "./pages/home";
 import AskList from "./pages/ask/AskList";
@@ -17,11 +16,10 @@ import PostAsk from "./pages/ask/PostAsk";
 import AskDetails from "./pages/ask/AskDetails";
 import AboutHelper from "./pages/about/AboutHelper";
 import ShowProfile from "./pages/profile/ShowProfile";
-import EditProfile from "./pages/profile/EditProfile"
+import EditProfile from "./pages/profile/EditProfile";
 import Logout from "./pages/login/Logout";
 
 const App = () => {
-
 	return (
 		<AuthProvider>
 			<Router>

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { pc, sp, tab } from "../../../media";
 import Button from "../../atoms/Button";
 import img from "../../../img/66169.jpg";
 import PermIdentityIcon from "@material-ui/icons/PermIdentity";
@@ -12,8 +13,16 @@ const EYE_CATCH = styled.div`
 	justify-content: space-between;
 `;
 const H3 = styled.h3`
-	font-size: 2.5rem;
-	padding-top: 20%;
+	${pc`
+
+font-size: 2.5rem;
+padding-top: 35%;
+`}
+	${tab`
+font-size: 1.5rem;
+padding-top: 30%;
+
+`}
 `;
 
 const IMG = styled.img`
@@ -22,13 +31,15 @@ const IMG = styled.img`
 `;
 
 const P = styled.p`
-	position: absolute;
-	top: 46%;
+	padding-top: 2%;
+	// position: absolute;
+	// top: 46%;
 `;
 
-const P2 = styled.p`
-	position: absolute;
-	top: 63%;
+const HELPER = styled.p`
+	// position: absolute;
+	// top: 63%;
+	padding-top: 18%;
 	font-size: 0.9rem;
 	&:hover {
 		text-decoration: underline;
@@ -65,33 +76,43 @@ const P3 = styled.p`
 `;
 
 export default function FirstView() {
-
-
 	return (
 		<div style={{ height: "100vh" }}>
 			<div style={{ paddingLeft: "4%", paddingRight: "1%" }}>
 				<EYE_CATCH>
-					<H3>
-						24時間いつでも相談
-						<br />
-						海外滞在を100%で楽しもう。
-					</H3>
+					<div>
+						<H3>
+							24時間いつでも相談
+							<br />
+							海外滞在を100%で楽しもう。
+						</H3>
+						<P>
+							海外滞在中、トラブルは付きもの。
+							<br />
+							Stayfulはあなたの海外滞在を24時間サポートします。
+						</P>
+
+						<Button
+							type="submit"
+							text="今すぐ相談する"
+							// top="53%"
+							marginTop= "2%"
+							link="/asklist"
+						/>
+						<Link to="/aboutHelper" style={{ color: "#333333" }}>
+							<HELPER>Helperとして登録したい方はコチラ</HELPER>
+						</Link>
+					</div>
 					<div>
 						<IMG src={img} alt="協力して考える人々" />
 					</div>
 				</EYE_CATCH>
 
-				<P>
+				{/* <P>
 					海外滞在中、トラブルは付きもの。
 					<br />
 					Stayfulはあなたの海外滞在を24時間サポートします。
-				</P>
-
-				<Button type="submit" text="今すぐ相談する" top="53%" link="/asklist" />
-
-				<Link to="/aboutHelper" style={{ color: "#333333" }}>
-					<P2>Helperとして登録したい方はコチラ</P2>
-				</Link>
+				</P> */}
 			</div>
 
 			{/* -----オレンジボックス------ */}

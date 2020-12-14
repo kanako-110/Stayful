@@ -6,7 +6,7 @@ import firebase from "../../firebase/firebase";
 import shortid from "shortid";
 import { AuthContext } from "../../firebase/AuthService";
 import { create_message } from "../../reducks/chat/action";
-import { set_user } from "../../reducks/user/action";
+// import { set_user } from "../../reducks/user/action";
 import TextField from "@material-ui/core/TextField";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
@@ -85,7 +85,7 @@ export default function SendField() {
 				pageId: id,
 			})
 		);
-		dispatch(set_user(user));
+		// dispatch(set_user(user));
 		reset();
 	};
 
