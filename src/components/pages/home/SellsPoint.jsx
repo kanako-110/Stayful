@@ -60,7 +60,7 @@ export default function SellsPoint() {
 				<SET_DIV>
 					<div>
 						<h5>24時間繋がる</h5>
-						<IMG src={connect} />
+						<IMG src={connect}/>
 						<P>
 							世界中でHelperが待機しています。あなたの相談をみたHelperが反応し、メッセージ１つですぐ相談が開始できます。
 						</P>
