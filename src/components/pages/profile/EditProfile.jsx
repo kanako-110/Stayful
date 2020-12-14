@@ -1,6 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { set_profile } from "../../../reducks/user/action";
 import shortid from "shortid";
 import firebase from "../../../firebase/firebase";
 import { AuthContext } from "../../../firebase/AuthService";
@@ -13,6 +15,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import TranslateIcon from "@material-ui/icons/Translate";
 import PublicIcon from "@material-ui/icons/Public";
+import { CodeSharp, SignalCellularNullSharp } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
 	large: {
@@ -65,17 +68,41 @@ export default function EditProfile() {
 	const history = useHistory();
 	const user = useContext(AuthContext);
 	const { register, handleSubmit, errors } = useForm();
+	const [languageData, set_languageData] = useState("");
+	const [countryData, set_countryData] = useState("");
+	const [commentData, set_commentData] = useState("");
+
+	// -----fetch profileData------//
+	useEffect(() => {
+		if (user) {
+			firebase
+				.firestore()
+				.collection("userProfile")
+				.where("userId", "==", user.uid)
+				.get()
+				.then((data) => {
+					data.docs.map((doc) => {
+						return {
+							language: set_languageData(doc.data().language),
+							country: set_countryData(doc.data().country),
+							comment: doc.data().comment
+								? set_commentData(doc.data().comment)
+								: null,
+						};
+					});
+				});
+		}
+	}, [user]);
+	// -------------------------------
 
 	const onForm_submit = (data) => {
 		console.log(data);
-		const userId = shortid.generate();
-
 		firebase
 			.firestore()
 			.collection("userProfile")
-			.doc(data.displayName)
+			.doc(user.uid)
 			.set({
-				userId: userId,
+				userId: user.uid,
 				displayName: data.displayName,
 				language: data.language,
 				country: data.country,
@@ -119,11 +146,14 @@ export default function EditProfile() {
 									inputRef={register({ required: true })}
 								/>
 								<br />
+
 								<TextField
 									className={classes.margin}
 									name="language"
 									id="input-with-icon-textfield"
 									label="話せる言語"
+									value={languageData}
+									onChange={(e) => set_languageData(e.target.value)}
 									style={{ width: "60%" }}
 									InputProps={{
 										startAdornment: (
@@ -141,7 +171,8 @@ export default function EditProfile() {
 									id="input-with-icon-textfield"
 									name="country"
 									label="精通している国 (住んだことのある国や、旅行したことのある国など)"
-									// helperText="(住んだことのある国や、旅行したことのある国など)"
+									value={countryData}
+									onChange={(e) => set_countryData(e.target.value)}
 									style={{ width: "60%" }}
 									InputProps={{
 										startAdornment: (
@@ -159,6 +190,8 @@ export default function EditProfile() {
 									id="outlined-full-width"
 									label="ひとこと"
 									helperText="(あなたの性格や、得意分野などを書いておくとAskerから高評価を得やすいです。)"
+									value={commentData}
+									onChange={(e) => set_commentData(e.target.value)}
 									style={{ margin: 8, width: "70%" }}
 									multiline
 									rows={5}

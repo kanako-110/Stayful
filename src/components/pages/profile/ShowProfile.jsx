@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../../firebase/AuthService";
 import firebase from "../../../firebase/firebase";
 import Button from "../../atoms/Button";
@@ -51,25 +51,26 @@ export default function ShowProfile() {
 	const classes = useStyles();
 	const user = useContext(AuthContext);
 	const history = useHistory();
-	const { name } = useParams();
 	const [profilesData, setProfilesData] = useState([]);
 
 	useEffect(() => {
-		firebase
-			.firestore()
-			.collection("userProfile")
-			.where("displayName", "==", name)
-			.get()
-			.then((data) => {
-				const response = data.docs.map((doc) => {
-					return doc.data();
+		if (user) {
+			firebase
+				.firestore()
+				.collection("userProfile")
+				.where("userId", "==", user.uid)
+				.get()
+				.then((data) => {
+					const response = data.docs.map((doc) => {
+						return doc.data();
+					});
+					setProfilesData(response);
 				});
-				setProfilesData(response);
-			});
-	}, []);
+		}
+	}, [user]);
 
 	const editButton = () => {
-		if (user && user.displayName === name) {
+		if (user && profilesData[0] && user.uid === profilesData[0].userId) {
 			return (
 				<div onClick={onButton_click}>
 					<Button text="プロフィールを編集する" left="76%" marginTop="5%" />
@@ -111,7 +112,7 @@ export default function ShowProfile() {
 											</InputAdornment>
 										),
 									}}
-									value={name}
+									value={user ? user.displayName : ""}
 								/>
 								<br />
 								<TextField
@@ -200,6 +201,4 @@ export default function ShowProfile() {
 			</div>
 		</div>
 	);
-
-
 }
