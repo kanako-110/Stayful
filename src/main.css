@@ -12,3 +12,18 @@
 	background-color: #faebd7;
 }
 
+.orangeWrapIcon {
+	font-size: 4rem !important;
+
+	/* Small Devices, sp
+	@media only screen and (max-width: 560px) {
+		font-size: 2rem !important;
+	}
+
+	/* Medium Devices, Desktops */
+	/* @media only screen and (max-width: 768px) {
+		font-size: 2rem !important;
+	} */
+}
+
+/* min-width: 561px) and (max-width: 1024px) { */
