@@ -15,6 +15,9 @@ const H3 = styled.h3`
 	font-weight: bold;
 	text-align: center;
 	padding: 6% 0%;
+	${sp`
+	font-size: 1rem
+`}
 `;
 
 const CONTAINER = styled.div`
