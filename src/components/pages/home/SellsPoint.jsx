@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { pc, sp, tab } from "../../../media";
 import translation from "../../../img/369812-PB8CJO-186.jpg";
 import connect from "../../../img/3946511.jpg";
 import money from "../../../img/627.jpg";
@@ -15,6 +16,9 @@ const H3 = styled.h3`
 	font-weight: bold;
 	text-align: center;
 	padding: 6% 0%;
+	${sp`
+	font-size: 1rem
+`}
 `;
 
 const CONTAINER = styled.div`
@@ -82,10 +86,10 @@ export default function SellsPoint() {
 				}}
 			>
 				<div>
-					<Button text="今すぐ始める" link="/login" top="187%" left="37%" />
+					<Button text="今すぐ始める" link="/login" marginTop="2%" left="37%" />
 				</div>
 				<div>
-					<Button text="詳しく見る" link="/about" top="187%" left="55%" />
+					<Button text="詳しく見る" link="/about" marginTop="2%" left="55%" />
 				</div>
 			</div>
 		</TOP_DIV>
