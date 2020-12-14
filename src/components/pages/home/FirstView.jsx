@@ -11,28 +11,41 @@ import EmojiObjectsIcon from "@material-ui/icons/EmojiObjects";
 const EYE_CATCH = styled.div`
 	display: flex;
 	justify-content: space-between;
+	height: 100%;
+	height: 78vh;
+	margin-top: 13%;
+	margin-left: 4%;
+	margin-right: 1%;
+	align-items: center;
+	${sp`
+	height: 60vh;
+`}
 `;
+
 const H3 = styled.h3`
 	${pc`
-
-font-size: 2.5rem;
-padding-top: 35%;
+		font-size: 2.5rem;
+		// padding-top: 35%;
 `}
 	${tab`
-font-size: 1.5rem;
-padding-top: 30%;
-
+	font-size: 1.5rem;
+		// padding-top: 60%;
+`}
+${sp`
+	// padding-top: 80%;
 `}
 `;
 
 const IMG = styled.img`
 	height: 400px;
-	padding-top: 30%;
+	width: 50%;
 `;
 
 const P = styled.p`
 	padding-top: 2%;
-	// position: absolute;
+	${sp`
+	font-size: 0.7rem;
+`}// position: absolute;
 	// top: 46%;
 `;
 
@@ -44,6 +57,13 @@ const HELPER = styled.p`
 	&:hover {
 		text-decoration: underline;
 	}
+	${tab`
+	padding-top: 25%;
+`}
+	${sp`
+	padding-top: 40%;
+	font-size: 0.3rem;
+`}
 `;
 
 const CONTAINER = styled.div`
@@ -68,76 +88,87 @@ const INNER = styled.div`
 	align-items: center;
 `;
 
+const TAG = styled.p`
+	${sp`
+	font-size: 0.5rem;
+	`}
+`;
+
+const ICON_BOX = styled.div``;
+
 const P3 = styled.p`
+	width: 100%;
 	font-size: 2rem;
 	font-weight: bold;
 	padding-top: 5px;
 	display: inline-block;
+	${sp`
+	font-size: 0.7rem
+`}
 `;
 
 export default function FirstView() {
 	return (
-		<div style={{ height: "100vh" }}>
-			<div style={{ paddingLeft: "4%", paddingRight: "1%" }}>
-				<EYE_CATCH>
-					<div>
-						<H3>
-							24時間いつでも相談
-							<br />
-							海外滞在を100%で楽しもう。
-						</H3>
-						<P>
-							海外滞在中、トラブルは付きもの。
-							<br />
-							Stayfulはあなたの海外滞在を24時間サポートします。
-						</P>
+		<div>
+			<EYE_CATCH>
+				<div>
+					<H3>
+						24時間いつでも相談
+						<br />
+						海外滞在を100%で楽しもう。
+					</H3>
+					<P>
+						海外滞在中、トラブルは付きもの。
+						<br />
+						Stayfulはあなたの海外滞在を24時間サポートします。
+					</P>
 
-						<Button
-							type="submit"
-							text="今すぐ相談する"
-							// top="53%"
-							marginTop= "2%"
-							link="/asklist"
-						/>
-						<Link to="/aboutHelper" style={{ color: "#333333" }}>
-							<HELPER>Helperとして登録したい方はコチラ</HELPER>
-						</Link>
-					</div>
-					<div>
-						<IMG src={img} alt="協力して考える人々" />
-					</div>
-				</EYE_CATCH>
+					<Button
+						type="submit"
+						text="今すぐ相談する"
+						// top="53%"
+						marginTop="2%"
+						link="/asklist"
+					/>
+					<Link to="/aboutHelper" style={{ color: "#333333" }}>
+						<HELPER>Helperとして登録したい方はコチラ</HELPER>
+					</Link>
+				</div>
+				{/* <div> */}
+				<IMG src={img} alt="協力して考える人々" />
+				{/* </div> */}
+			</EYE_CATCH>
 
-				{/* <P>
+			{/* <P>
 					海外滞在中、トラブルは付きもの。
 					<br />
 					Stayfulはあなたの海外滞在を24時間サポートします。
 				</P> */}
-			</div>
 
 			{/* -----オレンジボックス------ */}
 			<CONTAINER>
 				<WRAPPER>
 					<INNER>
+						<ICON_BOX>
+							<PermIdentityIcon className="orangeWrapIcon" />
+							{/* <PermIdentityIcon style={{ fontSize: 70 }} /> */}
+						</ICON_BOX>
 						<div>
-							<PermIdentityIcon style={{ fontSize: 70 }} />
-						</div>
-						<div>
-							<p>ユーザー数</p>
+							<TAG>ユーザー数</TAG>
 							<P3>20,000人</P3>　
 						</div>
 					</INNER>
 					<INNER>
 						<PermContactCalendarIcon style={{ fontSize: 70 }} />
 						<div>
-							<p>Helper数</p>
+							<TAG>Helper数</TAG>
 							<P3>700人</P3>
 						</div>
 					</INNER>
 					<INNER>
 						<EmojiObjectsIcon style={{ fontSize: 70 }} />
 						<div>
-							<p>解決数</p>
+							<TAG>解決数</TAG>
 							<P3>400件</P3>
 						</div>
 					</INNER>
