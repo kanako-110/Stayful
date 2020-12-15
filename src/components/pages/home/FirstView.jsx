@@ -23,17 +23,13 @@ const EYE_CATCH = styled.div`
 `;
 
 const H3 = styled.h3`
-	${pc`
-		font-size: 2.5rem;
-		// padding-top: 35%;
-`}
+	font-size: 2.2rem;
 	${tab`
-	font-size: 1.5rem;
-		// padding-top: 60%;
-`}
-${sp`
-	// padding-top: 80%;
-`}
+		font-size: 1.5rem;
+		`}
+	${sp`
+		font-size: 1rem;
+		`}
 `;
 
 const IMG = styled.img`
@@ -45,30 +41,30 @@ const P = styled.p`
 	padding-top: 2%;
 	${sp`
 	font-size: 0.7rem;
-`}// position: absolute;
-	// top: 46%;
+	`}
 `;
 
 const HELPER = styled.p`
-	// position: absolute;
-	// top: 63%;
-	padding-top: 18%;
+	padding-top: 20%;
 	font-size: 0.9rem;
 	&:hover {
 		text-decoration: underline;
 	}
 	${tab`
-	padding-top: 25%;
-`}
+		padding-top: 30%;
+		`}
 	${sp`
-	padding-top: 40%;
-	font-size: 0.3rem;
-`}
+		padding-top: 30%;
+		font-size: 0.3rem;
+		`}
 `;
 
 const CONTAINER = styled.div`
 	background-color: #ffdead;
-	height: 26%;
+	height: 20vh;
+	${sp`
+		height: 15vh;
+	`}
 `;
 
 const WRAPPER = styled.span`
@@ -81,10 +77,8 @@ const WRAPPER = styled.span`
 `;
 
 const INNER = styled.div`
-	// padding: 6% 10%;
 	display: flex;
 	text-align: center;
-	width: 25%;
 	align-items: center;
 `;
 
@@ -94,14 +88,15 @@ const TAG = styled.p`
 	`}
 `;
 
-const ICON_BOX = styled.div``;
-
 const P3 = styled.p`
 	width: 100%;
 	font-size: 2rem;
 	font-weight: bold;
 	padding-top: 5px;
 	display: inline-block;
+	${tab`
+	font-size: 1.3rem;
+`}
 	${sp`
 	font-size: 0.7rem
 `}
@@ -115,7 +110,7 @@ export default function FirstView() {
 					<H3>
 						24時間いつでも相談
 						<br />
-						海外滞在を100%で楽しもう。
+						海外滞在を100%楽しもう。
 					</H3>
 					<P>
 						海外滞在中、トラブルは付きもの。
@@ -126,7 +121,6 @@ export default function FirstView() {
 					<Button
 						type="submit"
 						text="今すぐ相談する"
-						// top="53%"
 						marginTop="2%"
 						link="/asklist"
 					/>
@@ -134,40 +128,32 @@ export default function FirstView() {
 						<HELPER>Helperとして登録したい方はコチラ</HELPER>
 					</Link>
 				</div>
-				{/* <div> */}
 				<IMG src={img} alt="協力して考える人々" />
-				{/* </div> */}
 			</EYE_CATCH>
-
-			{/* <P>
-					海外滞在中、トラブルは付きもの。
-					<br />
-					Stayfulはあなたの海外滞在を24時間サポートします。
-				</P> */}
 
 			{/* -----オレンジボックス------ */}
 			<CONTAINER>
 				<WRAPPER>
+					{/* -----1つめ----- */}
 					<INNER>
-						<ICON_BOX>
-							<PermIdentityIcon className="orangeWrapIcon" />
-							{/* <PermIdentityIcon style={{ fontSize: 70 }} /> */}
-						</ICON_BOX>
-						<div>
+						<PermIdentityIcon style={{ fontSize: 65 }} />
+						<div style={{ width: "auto" }}>
 							<TAG>ユーザー数</TAG>
-							<P3>20,000人</P3>　
+							<P3>2000人</P3>
 						</div>
 					</INNER>
+					{/* -----2つめ----- */}
 					<INNER>
-						<PermContactCalendarIcon style={{ fontSize: 70 }} />
-						<div>
+						<PermContactCalendarIcon style={{ fontSize: 65 }} />
+						<div style={{ width: "auto" }}>
 							<TAG>Helper数</TAG>
 							<P3>700人</P3>
 						</div>
 					</INNER>
+					{/* -----3つめ----- */}
 					<INNER>
-						<EmojiObjectsIcon style={{ fontSize: 70 }} />
-						<div>
+						<EmojiObjectsIcon style={{ fontSize: 65 }} />
+						<div style={{ width: "auto" }}>
 							<TAG>解決数</TAG>
 							<P3>400件</P3>
 						</div>

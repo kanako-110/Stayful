@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { pc, sp, tab } from "../../../media";
 import translation from "../../../img/369812-PB8CJO-186.jpg";
 import connect from "../../../img/3946511.jpg";
 import money from "../../../img/627.jpg";
@@ -9,20 +10,26 @@ const TOP_DIV = styled.div`
 	height: 100vh;
 	width: 100%;
 	box-sizing: border-box;
+	${tab`
+		height: 90vh;
+`}
+	${sp`
+		height: 80vh`}
 `;
 const H3 = styled.h3`
-	font-size: 2rem;
+	font-size: 1.8rem;
 	font-weight: bold;
 	text-align: center;
 	padding: 6% 0%;
+	${tab`
+	font-size: 1rem;
+`}
 	${sp`
-	font-size: 1rem
+	font-size: 0.8rem;
 `}
 `;
 
 const CONTAINER = styled.div`
-	// padding-left: 4%;
-	// padding-right: 4%;
 	display: flex;
 	justify-content: space-between;
 `;
@@ -40,6 +47,26 @@ const IMG = styled.img`
 const P = styled.p`
 	padding-top: 10%;
 `;
+
+const BUTTON_POSITION = styled.div`
+	width: 15%;
+	margin: 0 auto;
+	padding-right: 10%;
+	${tab`
+	width: 25%;
+	padding-right: 15%;
+`}
+	${sp`
+	width: 30%;
+	padding-right: 20%;
+`}
+`;
+
+const BUTTON_BOX = styled.div`
+	display: flex;
+	justify-content: space-between;
+`;
+
 export default function SellsPoint() {
 	return (
 		<TOP_DIV>
@@ -77,20 +104,16 @@ export default function SellsPoint() {
 				</SET_DIV>
 			</CONTAINER>
 			{/* ------Button------- */}
-			<div
-				style={{
-					display: "flex",
-					justifyContent: "space-between",
-					width: "20%",
-				}}
-			>
-				<div>
-					<Button text="今すぐ始める" link="/login" top="187%" left="37%" />
-				</div>
-				<div>
-					<Button text="詳しく見る" link="/about" top="187%" left="55%" />
-				</div>
-			</div>
+			<BUTTON_POSITION>
+				<BUTTON_BOX>
+					<div>
+						<Button text="今すぐ始める" link="/login" marginTop="2%" />
+					</div>
+					<div>
+						<Button text="詳しく見る" link="/about" marginTop="2%" />
+					</div>
+				</BUTTON_BOX>
+			</BUTTON_POSITION>
 		</TOP_DIV>
 	);
 }
