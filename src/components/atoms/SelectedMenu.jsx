@@ -101,11 +101,6 @@ export default function SelectedMenu() {
 					onClick={handleToggle}
 				>
 					<MOREVERT_ICON />
-					{/* <MoreVertIcon
-						fontSize="large"
-						style={{ display: "inline-block", verticalAlign: "middle"
-					}}
-					/> */}
 				</Button>
 				<Popper
 					open={open}
