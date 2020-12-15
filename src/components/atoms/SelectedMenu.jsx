@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import firebase from "../../firebase/firebase";
 import { AuthContext } from "../../firebase/AuthService";
@@ -11,6 +11,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import { makeStyles } from "@material-ui/core/styles";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import styled from "styled-components";
+import { pc, sp, tab } from "../../media";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -21,12 +23,25 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
+const MOREVERT_ICON = styled(MoreVertIcon)`
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 2.5rem;
+	width: auto;
+	${tab`
+	font-size: 2rem;
+`}
+	${sp`
+	font-size: 1.5rem
+	`}
+`;
+
 export default function SelectedMenu() {
 	const classes = useStyles();
 	const user = useContext(AuthContext);
 	const [open, setOpen] = React.useState(false);
 	const anchorRef = React.useRef(null);
-	const profileLink =  `/yourprofile/${user.displayName}`
+	const profileLink = `/yourprofile/${user.displayName}`;
 
 	const handleToggle = () => {
 		setOpen((prevOpen) => !prevOpen);
@@ -85,10 +100,7 @@ export default function SelectedMenu() {
 					aria-haspopup="true"
 					onClick={handleToggle}
 				>
-					<MoreVertIcon
-						fontSize="large"
-						style={{ display: "inline-block", verticalAlign: "middle" }}
-					/>
+					<MOREVERT_ICON />
 				</Button>
 				<Popper
 					open={open}
@@ -113,7 +125,7 @@ export default function SelectedMenu() {
 										onKeyDown={handleListKeyDown}
 									>
 										<Link
-											to= {profileLink}
+											to={profileLink}
 											style={{
 												color: "#333333",
 												textDecoration: "none",

@@ -1,6 +1,8 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import { pc, sp, tab } from "../../media";
+
 
 const BUTTON = styled.button`
 	position: absolute;
@@ -20,6 +22,14 @@ const BUTTON = styled.button`
 		opacity: 1;
 		outline: 0;
 	}
+	${tab`
+	 padding: 15px 10px;
+	`}
+${sp`
+	font-size: 0.8rem;
+	padding: 8px;
+	`}
+
 `;
 
 export default function Button({ text, link, top, left, marginTop }) {

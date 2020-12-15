@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { AuthContext } from "../../firebase/AuthService";
 import SelectedMenu from "../atoms/SelectedMenu";
 import styled from "styled-components";
+import { pc, sp, tab } from "../../media";
 import {
 	AppBar,
 	makeStyles,
@@ -52,13 +53,20 @@ const LINK = styled.a`
 		color: "#333333";
 		background-color: rgb(23 22 22 / 7%);
 	}
+	${sp`
+		font-size: 0.9rem;
+		`}
 `;
 
-
-
+const MAIL_IMG = styled.img`
+	height: 30px;
+	${sp`
+		height: 25px;
+		`}
+`;
 
 export default function Header() {
-	const { header, logo,  toolbar } = useStyles();
+	const { header, logo, toolbar } = useStyles();
 
 	// 最終的にヘッダーに移っている内容
 	const DISPLAY_DESKTOP = () => {
@@ -94,18 +102,13 @@ export default function Header() {
 					<LINK href="/asklist">ASK</LINK>
 					<LINK href="/asklist">HELP</LINK>
 					<LINK href="/chatlist">
-						<img
-							src={MailImg}
-							style={{
-								height: "30px",
-							}}
-						/>
+						<MAIL_IMG src={MailImg} />
 					</LINK>
-					<SelectedMenu  />
+					<SelectedMenu />
 				</BUTTON_BOX>
 			);
-		
-		}	else {  	// -------未ログイン時--------//
+		} else {
+			// -------未ログイン時--------//
 			return (
 				<BUTTON_BOX>
 					<LINK href="/asklist">ASK</LINK>
