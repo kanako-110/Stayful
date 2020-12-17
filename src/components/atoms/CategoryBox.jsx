@@ -4,7 +4,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-
+import styled from "styled-components";
+import { sp, tab } from "../../media";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -22,37 +23,45 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
+const FORM_CONTROL = styled(FormControl)`
+	${tab`
+	width: 80% !important ;
+`}
+	${sp`
+	width: 30% !important;
+	`}
+`;
+
+
 
 export default function CategoryBox() {
-  const classes = useStyles();
-  const [age, setAge] = React.useState("");
+	const classes = useStyles();
+	const [age, setAge] = React.useState("");
 
 	const handleChange = (event) => {
 		setAge(event.target.value);
 	};
-  return (
-    <FormControl
-					variant="outlined"
-					className={classes.formControl}
-					style={{ width: "25ch", paddingBottom: "3%" }}
-				>
-					<InputLabel id="demo-simple-select-outlined-label">
-						カテゴリ
-					</InputLabel>
-					<Select
-						labelId="demo-simple-select-outlined-label"
-						id="demo-simple-select-outlined"
-						value={age}
-						onChange={handleChange}
-						label="Age"
-					>
-						<MenuItem value="">
-							<em>None</em>
-						</MenuItem>
-						<MenuItem value={10}>お金</MenuItem>
-						<MenuItem value={20}>携帯登録</MenuItem>
-						<MenuItem value={30}>制度</MenuItem>
-					</Select>
-				</FormControl>
-  )
+	return (
+		<FORM_CONTROL
+			variant="outlined"
+			className={classes.formControl}
+			style={{ width: "25ch", paddingBottom: "3%" }}
+		>
+			<InputLabel id="demo-simple-select-outlined-label">カテゴリ</InputLabel>
+			<Select
+				labelId="demo-simple-select-outlined-label"
+				id="demo-simple-select-outlined"
+				value={age}
+				onChange={handleChange}
+				label="Age"
+			>
+				<MenuItem value="">
+					<em>None</em>
+				</MenuItem>
+				<MenuItem value={10}>お金</MenuItem>
+				<MenuItem value={20}>携帯登録</MenuItem>
+				<MenuItem value={30}>制度</MenuItem>
+			</Select>
+		</FORM_CONTROL>
+	);
 }

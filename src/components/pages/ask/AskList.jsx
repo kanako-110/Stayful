@@ -13,6 +13,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import { pc, sp, tab } from "../../../media";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -30,21 +31,52 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
+const TOP_DIV = styled.div`
+	${tab`
+padding-top: 3%
+`}
+	${sp`
+padding-top: 10%;
+
+`}
+`;
+
 const H3 = styled.h3`
-	position: absolute;
-	left: 38%;
+	padding-bottom: 3%;
 	color: #f5b47a;
 	font-size: 2rem;
+	${sp`
+			font-size:1.5rem;
+		`}
+`;
+
+const WRAPPER = styled.div`
+	display: flex;
+	justify-content: space-between;
 `;
 
 const SEARCH_BOX = styled.div`
-	width: 27%;
+	width: 27% !important;
 	height: auto;
-	padding: 1%;
-	background-color: #ffffff;
+	${sp`
+			width: 30%;
+		`}
 `;
 
+const RIGHT_WRAPPER = styled.div`
+	width: 60%;
+`;
 
+const TEXTFIELD = styled(TextField)`
+	width: 100%;
+	${sp`
+	font-size: 0.8rem;
+`}
+`;
+
+const BUTTON_WRAPPER = styled.div`
+margin-left: 85%;
+`;
 
 
 const AskList = () => {
@@ -67,60 +99,58 @@ const AskList = () => {
 	};
 
 	return (
-		<div className="COLOR_POSITION" style={{height:"230vh"}}>
-			<div className="ENTIRE_DIV">
+		<div className="COLOR_POSITION" style={{ height: "230vh" }}>
+			<TOP_DIV className="ENTIRE_DIV">
 				<H3>相談する</H3>
-				{/* ////検索ボックス///// */}
-				<SEARCH_BOX>
-					{/* 1 条件 */}
-					<form className={classes.root} noValidate autoComplete="off">
-						<TextField
-							id="outlined-basic"
-							label="条件で絞る"
-							variant="outlined"
-						/>
-					</form>
-					{/* 2カテゴリ */}
-					<CategoryBox />
-					{/* 3国で絞る */}
-					<SelectCountryBox />
-					{/* 4言語 */}
-					<FormControl variant="outlined" className={classes.formControl}>
-						<InputLabel id="demo-simple-select-outlined-label">
-							言語で絞る
-						</InputLabel>
-						<Select
-							labelId="demo-simple-select-outlined-label"
-							id="demo-simple-select-outlined"
-							value={age}
-							onChange={handleChange}
-							label="Age"
-						>
-							<MenuItem value="">
-								<em>None</em>
-							</MenuItem>
-							<MenuItem value={10}>英語</MenuItem>
-							<MenuItem value={20}>ドイツ語</MenuItem>
-							<MenuItem value={30}>韓国語</MenuItem>
-						</Select>
-					</FormControl>
-				</SEARCH_BOX>
+				<WRAPPER>
+					{/* ------検索ボックス----- */}
 
-				{/*----- 編集・投稿ボタン----- */}
-				<Button
-					text="自分の投稿を編集する"
-					link="/editask"
-					top="24%"
-					left="65%"
-				/>
-				<div onClick={onPost_click}>
-					<Button text="投稿する" top="24%" left="86%" />
-				</div>
+					<SEARCH_BOX>
+						{/* 1 条件 */}
+						<form className={classes.root} noValidate autoComplete="off">
+							<TEXTFIELD
+								id="outlined-basic"
+								label="条件で絞る"
+								variant="outlined"
+							/>
+						</form>
+						{/* 2カテゴリ */}
+						<CategoryBox />
+						{/* 3国で絞る */}
+						<SelectCountryBox />
+						{/* 4言語 */}
+						<FormControl variant="outlined" className={classes.formControl}>
+							<InputLabel id="demo-simple-select-outlined-label">
+								言語で絞る
+							</InputLabel>
+							<Select
+								labelId="demo-simple-select-outlined-label"
+								id="demo-simple-select-outlined"
+								value={age}
+								onChange={handleChange}
+								label="Age"
+							>
+								<MenuItem value="">
+									<em>None</em>
+								</MenuItem>
+								<MenuItem value={10}>英語</MenuItem>
+								<MenuItem value={20}>ドイツ語</MenuItem>
+								<MenuItem value={30}>韓国語</MenuItem>
+							</Select>
+						</FormControl>
+					</SEARCH_BOX>
 
-				{/* -----ask一覧 ------ */}
-				<PostedAsk />
-				
-			</div>
+					{/*----- 右側　編集・投稿ボタン----- */}
+					<RIGHT_WRAPPER>
+						<BUTTON_WRAPPER onClick={onPost_click}>
+							<Button text="投稿する" />
+						</BUTTON_WRAPPER>
+
+						{/* -----ask一覧 ------ */}
+						<PostedAsk />
+					</RIGHT_WRAPPER>
+				</WRAPPER>
+			</TOP_DIV>
 		</div>
 	);
 };
