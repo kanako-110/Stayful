@@ -15,7 +15,8 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import TranslateIcon from "@material-ui/icons/Translate";
 import PublicIcon from "@material-ui/icons/Public";
-import { CodeSharp, SignalCellularNullSharp } from "@material-ui/icons";
+import { sp, tab } from "../../../media";
+
 
 const useStyles = makeStyles((theme) => ({
 	large: {
@@ -61,6 +62,13 @@ const ERROR = styled.p`
 	margin-right: 14px;
 	font-size: 0.75rem;
 	letter-spacing: 0.03333em;
+`;
+
+const BUTTON_POSITION = styled.div`
+	margin-left: 80%;
+	${sp `
+		margin-left: 70%;
+	`}
 `;
 
 export default function EditProfile() {
@@ -202,7 +210,9 @@ export default function EditProfile() {
 									variant="outlined"
 									inputRef={register}
 								/>
-								<Button text="変更する" left="86%" marginTop="20%" />
+								<BUTTON_POSITION>
+									<Button text="変更する" />
+								</BUTTON_POSITION>
 							</form>
 						</EDIT_BOX>
 					</div>

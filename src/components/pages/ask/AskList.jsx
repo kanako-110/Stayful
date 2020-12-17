@@ -10,10 +10,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import { pc, sp, tab } from "../../../media";
+import { sp, tab } from "../../../media";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -76,6 +75,9 @@ const TEXTFIELD = styled(TextField)`
 
 const BUTTON_WRAPPER = styled.div`
 margin-left: 85%;
+	${sp `
+		margin-left: 70%;
+	`}
 `;
 
 
