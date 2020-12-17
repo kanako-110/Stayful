@@ -23,7 +23,9 @@ const BUTTON = styled.button`
 		outline: 0;
 	}
 	${tab`
-	 padding: 15px 10px;
+	font-size: 0.9rem;
+	 padding: 13px 10px;
+
 	`}
 ${sp`
 	font-size: 0.8rem;
@@ -32,7 +34,7 @@ ${sp`
 
 `;
 
-export default function Button({ text, link, top, left, marginTop }) {
+export default function Button({ text, link, top, left, marginTop, marginLeft }) {
 	const history = useHistory();
 	const onButton_click = (link) => {
 		history.push(link);
@@ -40,7 +42,7 @@ export default function Button({ text, link, top, left, marginTop }) {
 	return (
 		<BUTTON
 			onClick={() => onButton_click(link)}
-			style={{ top: top, left: left, marginTop: marginTop }}
+			style={{ top: top, left: left, marginTop: marginTop, marginLeft: marginLeft }}
 		>
 			{text}
 		</BUTTON>

@@ -2,15 +2,17 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { create_ask} from "../../../reducks/ask/action";
+import { create_ask } from "../../../reducks/ask/action";
 import shortid from "shortid";
 import firebase from "../../../firebase/firebase";
 import styled from "styled-components";
+import { pc, sp, tab } from "../../../media";
 import CategoryBox from "../../atoms/CategoryBox";
 import SelectCountryBox from "../../atoms/SelectCountryBox";
 import Button from "../../atoms/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import Faker from "faker";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -24,10 +26,25 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
+const TOP_DIV = styled.div`
+	${tab`
+	padding-top: 5%;
+`}
+	${sp`
+	padding-top: 10%;
+`}
+`;
+
 const H3 = styled.h3`
 	color: #f5b47a;
 	font-size: 2rem;
 	padding-bottom: 5%;
+	${tab`
+	font-size: 1.8rem
+	`}
+	${sp`
+		font-size: 1.5rem;
+	`}
 `;
 
 const CONTAIN_PROFILE_POSTBOX = styled.div`
@@ -35,16 +52,8 @@ const CONTAIN_PROFILE_POSTBOX = styled.div`
 	justify-content: space-between;
 `;
 
-const PROFILE_BOX = styled.div`
-	background-color: #ffffff;
-	width: 30%;
-	height: 28vh;
-`;
-
 const POST_BOX = styled.div`
 	height: 90vh;
-	width: 100%;
-	background-color: #ffffff;
 `;
 
 const ERROR = styled.p`
@@ -57,11 +66,35 @@ const ERROR = styled.p`
 	letter-spacing: 0.03333em;
 `;
 
+const PROFILE_BOX = styled.div`
+	width: 27%;
+	height: 28vh;
+	text-align: center;
+	padding: 2% 0;
+	border: 2px solid #2f2f1e;
+`;
+
+const BUTTON_POSITION = styled.div`
+	float: right;
+	margin-right: 13%;
+	${tab`
+		margin-right: 22%;
+	`}
+	${sp`
+		margin-right: 22%;
+	`}
+`;
+
 export default function PostAsk() {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const { register, handleSubmit, errors } = useForm();
+
+	const user = {
+		name: Faker.internet.userName(),
+		avatar: Faker.image.people(),
+	};
 
 	const onForm_submit = (data) => {
 		const askId = shortid.generate();
@@ -97,20 +130,30 @@ export default function PostAsk() {
 
 	return (
 		<div className="COLOR_POSITION">
-			<div className="ENTIRE_DIV">
+			<TOP_DIV className="ENTIRE_DIV">
 				<CONTAIN_PROFILE_POSTBOX>
 					{/* -----プロフィール表示----- */}
-					<PROFILE_BOX></PROFILE_BOX>
+					<PROFILE_BOX>
+						<img
+							style={{ paddingBottom: "2%", width: "70%", height: "25vh" }}
+							src={user.avatar}
+							// width="140"
+							// height="140"
+						/>
+						<p>{user.name}</p>
+					</PROFILE_BOX>
+
+					{/* <PROFILE_BOX></PROFILE_BOX> */}
 
 					{/*----- pegaTitle and PostBox----- */}
-					<div>
+					<div style={{ width: "60%" }}>
 						{/*---- ページタイトル----- */}
 						<H3>相談を投稿する</H3>
 						{/* -----投稿ボックス----- */}
 						<POST_BOX>
 							<form onSubmit={handleSubmit(onForm_submit)}>
 								<div className={classes.root}>
-									<div style={{ width: "90%", padding: "5% 0" }}>
+									<div style={{ width: "100%" }}>
 										{errors.title && <ERROR>タイトルを記入してください</ERROR>}
 										<TextField
 											name="title"
@@ -150,12 +193,14 @@ export default function PostAsk() {
 										/>
 									</div>
 								</div>
-								<Button text="投稿する" top="88%" left="76%" />
+								<BUTTON_POSITION>
+									<Button text="投稿する" />
+								</BUTTON_POSITION>
 							</form>
 						</POST_BOX>
 					</div>
 				</CONTAIN_PROFILE_POSTBOX>
-			</div>
+			</TOP_DIV>
 		</div>
 	);
 }

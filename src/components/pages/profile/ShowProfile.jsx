@@ -4,6 +4,7 @@ import { AuthContext } from "../../../firebase/AuthService";
 import firebase from "../../../firebase/firebase";
 import Button from "../../atoms/Button";
 import styled from "styled-components";
+import { sp, tab } from "../../../media";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -29,6 +30,15 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
+const TOP_DIV = styled.div`
+	${tab`
+padding-top: 5%;
+`}
+	${sp`
+	padding-top: 13%;
+`}
+`;
+
 const PROFILE_EDITBOX = styled.div`
 	display: flex;
 	justify-content: space-between;
@@ -41,10 +51,21 @@ const H3 = styled.h3`
 `;
 
 const PROFILE_BOX = styled.div`
-	background-color: #ffffff;
 	height: 55vh;
 	margin: auto;
 	padding: 1% 2%;
+`;
+
+const BUTTON_POSITION = styled.div`
+	float: right;
+	margin-top: 5%;
+	margin-right: 25%;
+	${tab`
+		margin-right: 45%;
+ `}
+	${sp`
+		margin-right: 55%;
+	`}
 `;
 
 export default function ShowProfile() {
@@ -72,9 +93,9 @@ export default function ShowProfile() {
 	const editButton = () => {
 		if (user && profilesData[0] && user.uid === profilesData[0].userId) {
 			return (
-				<div onClick={onButton_click}>
-					<Button text="プロフィールを編集する" left="76%" marginTop="5%" />
-				</div>
+				<BUTTON_POSITION onClick={onButton_click}>
+					<Button text="プロフィールを編集する" />
+				</BUTTON_POSITION>
 			);
 		}
 	};
@@ -85,7 +106,7 @@ export default function ShowProfile() {
 
 	return (
 		<div className="COLOR_POSITION" style={{ height: "80vh" }}>
-			<div className="ENTIRE_DIV">
+			<TOP_DIV className="ENTIRE_DIV">
 				<PROFILE_EDITBOX>
 					<div>
 						<Avatar src="/broken-image.jpg" className={classes.large} />
@@ -193,12 +214,12 @@ export default function ShowProfile() {
 											: ""
 									}
 								/>
-								<span>{editButton()}</span>
 							</form>
+							<span>{editButton()}</span>
 						</PROFILE_BOX>
 					</div>
 				</PROFILE_EDITBOX>
-			</div>
+			</TOP_DIV>
 		</div>
 	);
 }

@@ -9,7 +9,7 @@ import Button from "../../atoms/Button";
 import SendField from "../../atoms/SendField";
 import DeleteTwoToneIcon from "@material-ui/icons/DeleteTwoTone";
 import styled from "styled-components";
-import { CropPortrait } from "@material-ui/icons";
+import { sp, tab } from "../../../media";
 
 const H3 = styled.h6`
 	text-align: center;
@@ -17,6 +17,12 @@ const H3 = styled.h6`
 	color: #f5b47a;
 	font-size: 2.5rem;
 	font-family: Questrial, sans-serif;
+	${tab `
+		margin-top: 7%;
+	`}
+	${sp `
+		padding-top: 15%;
+	`}
 `;
 
 const IMG_TEXT_WRAPPER = styled.div`
@@ -26,7 +32,6 @@ const IMG_TEXT_WRAPPER = styled.div`
 
 const MESSAGE_BOX = styled.div`
 	width: 100%;
-	// background-color: #c0c0c0;
 `;
 
 const MESSAGE_INNER = styled.div`
@@ -47,7 +52,6 @@ const TEXT_BOX = styled.div`
 `;
 
 const NAME = styled.p`
-  // width: 10%;
 	display: inline-block;
 	font-size: 0.9rem;
 	padding-bottom: 1%;
@@ -60,11 +64,23 @@ const NAME = styled.p`
 const TEXT = styled.p`
 	font-size: 1.1rem;
 	padding-bottom: 1%;
+	${sp`
+		font-size: 0.9rem
+		`}
 `;
 
 const TIME = styled.p`
 	font-size: 0.6rem;
-	// padding-bottom: 1%;
+`;
+
+const BUTTON_POSITION = styled.div`
+margin-left: 70%;
+	${tab `
+		margin-left: 65%;
+	`}
+	${sp `
+		margin-left: 60%;
+	`}
 `;
 
 export default function Chat() {
@@ -144,10 +160,9 @@ export default function Chat() {
 
 									<TEXT_BOX>
 										<span>
-
-										<NAME onClick={() => onUser_click(message.displayName)}>
-											{message.displayName}
-										</NAME>
+											<NAME onClick={() => onUser_click(message.displayName)}>
+												{message.displayName}
+											</NAME>
 										</span>
 										<TEXT> {message.text} </TEXT>
 										{messageTime(message)}
@@ -168,8 +183,10 @@ export default function Chat() {
 				})}
 
 				<SendField />
-				<Button text="解決した" marginTop="2%" left="75%" />
-				<Button text="レビュー" marginTop="2%" left="86%" />
+				<BUTTON_POSITION>
+					<Button text="解決した" marginTop="2%" />
+					<Button text="レビュー" marginTop="2%" marginLeft="20%" />
+				</BUTTON_POSITION>
 			</div>
 		</div>
 	);
