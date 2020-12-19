@@ -91,7 +91,9 @@ const AskList = () => {
 
 	const history = useHistory();
 
+	
 	const user = useContext(AuthContext);
+	console.log(user)
 	const onPost_click = () => {
 		if (user) {
 			history.push("postask");

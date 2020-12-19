@@ -18,6 +18,8 @@ import AboutHelper from "./pages/about/AboutHelper";
 import ShowProfile from "./pages/profile/ShowProfile";
 import EditProfile from "./pages/profile/EditProfile";
 import Logout from "./pages/login/Logout";
+import LoginAsHelper from "./pages/login/LogInAsHelper";
+import SignUpAsHelper from "./pages/login/SignUpAsHelper";
 
 const App = () => {
 	return (
@@ -40,6 +42,8 @@ const App = () => {
 					<Route path="/yourprofile/:name" exact component={ShowProfile} />
 					<Route path="/editprofile/:name" exact component={EditProfile} />
 					<Route path="/logout" exact component={Logout} />
+					<Route path="/HelperLogin" exact component={LoginAsHelper} />
+					<Route path="/HelperSignUp" exact component={SignUpAsHelper} />
 				</Switch>
 				<Footer />
 			</Router>

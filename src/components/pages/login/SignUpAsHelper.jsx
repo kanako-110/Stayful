@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import { useForm } from "react-hook-form";
 import firebase from "../../../firebase/firebase";
 import Avatar from "@material-ui/core/Avatar";
@@ -45,38 +45,36 @@ const ERROR = styled.p`
 	letter-spacing: 0.03333em;
 `;
 
-export default function SignUp({ history }) {
+export default function SignUpAsHelper({ history }) {
 	const classes = useStyles();
 	const { register, handleSubmit, errors } = useForm();
 	const [userName, setUserName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
+
+
 	const onForm_submit = (data) => {
-		console.log(data);
 		firebase
 			.auth()
 			.createUserWithEmailAndPassword(email, password)
 			.then((response) => {
 				response.user.updateProfile({
 					displayName: userName,
+					As: "Helper",
 				});
 			})
 			.then(() => {
-				console.log("successfully signUp!")
+				console.log("successfully signUp!");
 				history.push("/asklist");
 			})
 			.catch((err) => {
 				alert(err);
 			});
-		console.log(email);
-		console.log(password);
 	};
 
-
-
 	return (
-		<div style={{ padding: "9% 0", height: "95vh" }}>
+		<div style={{ padding: "5% 0", height: "95vh" }}>
 			<Container component="main" maxWidth="xs">
 				<CssBaseline />
 				<div className={classes.paper}>
