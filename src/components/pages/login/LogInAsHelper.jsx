@@ -125,7 +125,6 @@ export default function LoginAsHelper({ history }) {
 								</Link>
 							</Grid>
 							<Grid item>
-                {/* 👇helperとしてに変える */}
 								<Link href="/HelperSignUp" variant="body2">
 									{"Don't have an account? Sign Up"}
 								</Link>
