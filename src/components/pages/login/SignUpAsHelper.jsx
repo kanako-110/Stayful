@@ -1,6 +1,7 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import firebase from "../../../firebase/firebase";
+import shortid from "shortid";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -52,8 +53,6 @@ export default function SignUpAsHelper({ history }) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
-
-
 	const onForm_submit = (data) => {
 		firebase
 			.auth()
@@ -61,7 +60,6 @@ export default function SignUpAsHelper({ history }) {
 			.then((response) => {
 				response.user.updateProfile({
 					displayName: userName,
-					As: "Helper",
 				});
 			})
 			.then(() => {
@@ -71,6 +69,20 @@ export default function SignUpAsHelper({ history }) {
 			.catch((err) => {
 				alert(err);
 			});
+
+		const userId = shortid.generate();
+
+		firebase.firestore().collection("useAs").doc(userId)
+		.set({
+			userId : userId,
+			as : "Helper"
+		})
+		.then(function(){
+			console.log("As successfully set")
+		})
+		.catch(function (error) {
+			console.error("Error writing document: ", error);
+		})
 	};
 
 	return (
@@ -82,7 +94,7 @@ export default function SignUpAsHelper({ history }) {
 						<LockOutlinedIcon />
 					</Avatar>
 					<Typography component="h1" variant="h5">
-						Sign up
+						Sign Up to Help
 					</Typography>
 
 					<form

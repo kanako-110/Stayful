@@ -124,7 +124,7 @@ export default function FirstView() {
 						marginTop="2%"
 						link="/asklist"
 					/>
-					<Link to="/HelperLogin" style={{ color: "#333333" }}>
+					<Link to="/HelperSignUp" style={{ color: "#333333" }}>
 						<HELPER>Helperとして登録したい方はコチラ</HELPER>
 					</Link>
 				</div>

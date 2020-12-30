@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import shortid from "shortid";
 import firebase from "../../../firebase/firebase";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -63,17 +64,30 @@ export default function SignUp({ history }) {
 				});
 			})
 			.then(() => {
-				console.log("successfully signUp!")
+				console.log("successfully signUp!");
 				history.push("/asklist");
 			})
 			.catch((err) => {
 				alert(err);
 			});
-		console.log(email);
-		console.log(password);
+
+		const userId = shortid.generate();
+
+		firebase
+			.firestore()
+			.collection("useAs")
+			.doc(userId)
+			.set({
+				userId: userId,
+				as: "Helper",
+			})
+			.then(function () {
+				console.log("As successfully set");
+			})
+			.catch(function (error) {
+				console.error("Error writing document: ", error);
+			});
 	};
-
-
 
 	return (
 		<div style={{ padding: "9% 0", height: "95vh" }}>
@@ -84,7 +98,7 @@ export default function SignUp({ history }) {
 						<LockOutlinedIcon />
 					</Avatar>
 					<Typography component="h1" variant="h5">
-						Sign up
+						Sign Up to Ask
 					</Typography>
 
 					<form
