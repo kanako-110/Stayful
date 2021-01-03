@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { AuthContext } from "../../../firebase/AuthService";
 import styled from "styled-components";
 import { sp, tab } from "../../../media";
 
@@ -17,6 +19,27 @@ const TITLE = styled.p`
 `;
 
 const ChatList = () => {
+	const messages = useSelector((state) => state.messages);
+	const asks = useSelector((state) => state.asks);
+	const user = useContext(AuthContext);
+	const [title, set_title] = useState();
+
+	useEffect(() => {
+		if (user) {
+			const thisUserMessages = messages.filter(
+				(message) => message.userId === user.uid
+			);
+			set_title(
+				thisUserMessages.map((thisUserMessage) => {
+					console.log(thisUserMessage.askTitle)
+					return thisUserMessage.askTitle;
+				})
+			);
+		}
+	}, [user]);
+
+	console.log(title);
+
 	return (
 		<div className="ENTIRE_DIV" style={{ paddingTop: "10%", height: "100vh" }}>
 			<H3> MAIL LIST</H3>

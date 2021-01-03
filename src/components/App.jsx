@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import { AuthProvider } from "../firebase/AuthService";
+import firebase from "../firebase/firebase";
+import { fetch_asks } from "../reducks/ask/action";
+import { fetch_messages } from "../reducks/chat/action";
 import Header from "./module/Header";
 import Home from "./pages/home";
 import AskList from "./pages/ask/AskList";
@@ -22,6 +26,42 @@ import LoginAsHelper from "./pages/login/LogInAsHelper";
 import SignUpAsHelper from "./pages/login/SignUpAsHelper";
 
 const App = () => {
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		firebase
+			.firestore()
+			.collection("ask")
+			.get()
+			.then((data) => {
+				const askData = data.docs.map((doc) => {
+					return doc.data();
+				});
+				dispatch(fetch_asks(askData));
+			});
+
+		firebase
+			.firestore()
+			.collection("messages")
+			.orderBy("createdAt", "asc")
+			.get()
+			.then((data) => {
+				const messageData = data.docs.map((doc) => {
+					return {
+						createdAt: new Date(doc.data().createdAt.seconds * 1000),
+						displayName: doc.data().displayName,
+						getday: doc.data().getday,
+						messageId: doc.data().messageId,
+						text: doc.data().text,
+						pageId: doc.data().pageId,
+						userId: doc.data().userId,
+						askTitle: doc.data().askTitle,
+					};
+				});
+				dispatch(fetch_messages(messageData));
+			});
+	}, []);
+
 	return (
 		<AuthProvider>
 			<Router>
