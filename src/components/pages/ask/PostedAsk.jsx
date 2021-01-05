@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { fetch_asks } from "../../../reducks/ask/action";
 import firebase from "../../../firebase/firebase";
 import styled from "styled-components";
@@ -8,14 +8,13 @@ import { sp, tab } from "../../../media";
 
 const CONTAINER = styled.div`
 	margin-top: 15% !important;
-	${tab `
+	${tab`
 		margin-top: 22%!important;
 	`}
-	${sp `
+	${sp`
 		margin-top: 25% !important;
 	`}
 `;
-
 
 const ASK_BOX = styled.div`
 	border: 2px solid #2f2f1e;
@@ -52,35 +51,17 @@ const DETAIL = styled.p`
  	`}
 `;
 
-
-
 export default function PostedAsk() {
-	const [asks, set_asks] = useState([]);
-	const dispatch = useDispatch();
-
+	const asks = useSelector((state) => state.asks);
 	const history = useHistory();
 	const onTitle_click = (askId) => {
 		history.push(`/askdetails/${askId}`);
 	};
 
-	useEffect(() => {
-		firebase
-			.firestore()
-			.collection("ask")
-			.get()
-			.then((data) => {
-				const askData = data.docs.map((doc) => {
-					return doc.data();
-				});
-				dispatch(fetch_asks(askData));
-				set_asks(askData);
-			});
-	}, []);
-
 	return (
-		<>
-			<CONTAINER>
-				{asks.map((ask) => {
+		<CONTAINER>
+			{asks &&
+				asks.map((ask) => {
 					return (
 						<ASK_BOX key={ask.askId}>
 							<TITLE onClick={() => onTitle_click(ask.askId)}>
@@ -91,7 +72,6 @@ export default function PostedAsk() {
 						</ASK_BOX>
 					);
 				})}
-			</CONTAINER>
-		</>
+		</CONTAINER>
 	);
 }

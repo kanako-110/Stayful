@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { useDispatch } from "react-redux";
+import React, { useContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import firebase from "../../firebase/firebase";
@@ -48,6 +48,25 @@ export default function SendField() {
 	const user = useContext(AuthContext);
 	const { register, handleSubmit, errors, reset } = useForm();
 	const dispatch = useDispatch();
+	const [askTitle, set_askTitle] = useState();
+	const asks = useSelector((state) => state.asks);
+	const thisAsk = asks.filter((ask) => ask.askId == id);
+	useEffect(() => {
+		if (thisAsk[0] && thisAsk[0].title) {
+			set_askTitle(thisAsk[0].title);
+		}
+	}, [thisAsk]);
+
+	// const askTitle = thisAsk.map((mappedAsk) => {
+	// 	// console.log(mappedAsk.title)
+	// 	return console.log(mappedAsk.title);
+	// });
+	// console.log(askTitle);
+
+	// {thisAsk &&
+	// 	thisAsk.map((mappedAsk) => {
+	// 		return <ASKTITLE> {mappedAsk.title} </ASKTITLE>;
+	// 	})}
 	// const [text, setText] = useState("")
 
 	const onForm_submit = (e) => {
@@ -56,6 +75,7 @@ export default function SendField() {
 
 	const onButton_click = (data) => {
 		const messageId = shortid.generate();
+
 		firebase
 			.firestore()
 			.collection("messages")
@@ -67,6 +87,8 @@ export default function SendField() {
 				createdAt: new Date(),
 				getday: new Date().getDay(),
 				pageId: id,
+				userId: user.uid,
+				askTitle: askTitle,
 			})
 			.then(function () {
 				console.log("Document successfully written!");
@@ -83,11 +105,60 @@ export default function SendField() {
 				createdAt: new Date(),
 				getday: new Date().getDay(),
 				pageId: id,
+				userId: user.uid,
+				askTitle: askTitle,
 			})
 		);
 		// dispatch(set_user(user));
-		reset();
+		// reset();
 	};
+
+	// const onButton_click = (data) => {
+	// 	console.log(data);
+	// 	const messageId = shortid.generate();
+	// 	console.log(data.text);
+	// 	console.log(askTitle);
+	// 	// firebase
+	// 	// 	.firestore()
+	// 	// 	.collection("messages")
+	// 	// 	.doc(messageId)
+	// 	// 	.set({
+	// 	// 		messageId: messageId,
+	// 	// 		displayName: user.displayName,
+	// 	// 		text: data.text,
+	// 	// 		createdAt: new Date(),
+	// 	// 		getday: new Date().getDay(),
+	// 	// 		pageId: id,
+	// 	// 		userId: user.uid,
+	// 	// 		askTitle: askTitle,
+	// 	// 		askTitle: thisAsk.map((mappedAsk) => {
+	// 	// 			return mappedAsk.title;
+	// 	// 		}),
+	// 	// 	})
+	// 	// 	.then(function () {
+	// 	// 		console.log("Document successfully written!");
+	// 	// 	})
+	// 	// 	.catch(function (error) {
+	// 	// 		console.error("Error writing document: ", error);
+	// 	// 	});
+
+	// 	dispatch(
+	// 		create_message({
+	// 			messageId: messageId,
+	// 			displayName: user.displayName,
+	// 			text: data.text,
+	// 			createdAt: new Date(),
+	// 			getday: new Date().getDay(),
+	// 			pageId: id,
+	// 			userId: user.uid,
+	// 			// askTitle: askTitle,
+	// 			// askTitle: thisAsk.map((mappedAsk) => {
+	// 			// 	return mappedAsk.title;
+	// 			// }),
+	// 		})
+	// 	);
+	// 	reset();
+	// };
 
 	return (
 		<form onSubmit={onForm_submit}>

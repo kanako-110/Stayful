@@ -13,16 +13,23 @@ import { sp, tab } from "../../../media";
 
 const H3 = styled.h6`
 	text-align: center;
-	padding-bottom: 5%;
+	padding-bottom: 3%;
 	color: #f5b47a;
 	font-size: 2.5rem;
 	font-family: Questrial, sans-serif;
-	${tab `
+	${tab`
 		margin-top: 7%;
 	`}
-	${sp `
+	${sp`
 		padding-top: 15%;
 	`}
+`;
+
+const ASKTITLE = styled.h3`
+	text-align: center;
+	padding-bottom: 5%;
+	font-size: 1.5rem;
+	font-weight: initial;
 `;
 
 const IMG_TEXT_WRAPPER = styled.div`
@@ -74,11 +81,11 @@ const TIME = styled.p`
 `;
 
 const BUTTON_POSITION = styled.div`
-margin-left: 70%;
-	${tab `
+	margin-left: 70%;
+	${tab`
 		margin-left: 65%;
 	`}
-	${sp `
+	${sp`
 		margin-left: 60%;
 	`}
 `;
@@ -87,29 +94,10 @@ export default function Chat() {
 	const { id } = useParams();
 	const dispatch = useDispatch();
 	const messages = useSelector((state) => state.messages);
+	const thisAskMessages = messages.filter((message) => message.pageId === id);
+	const asks = useSelector((state) => state.asks);
+	const thisAsk = asks.filter((ask) => ask.askId == id);
 	const avatar = Faker.image.people();
-
-	useEffect(() => {
-		firebase
-			.firestore()
-			.collection("messages")
-			.where("pageId", "==", id)
-			.orderBy("createdAt", "asc")
-			.get()
-			.then((data) => {
-				const messageData = data.docs.map((doc) => {
-					return {
-						createdAt: new Date(doc.data().createdAt.seconds * 1000),
-						displayName: doc.data().displayName,
-						getday: doc.data().getday,
-						messageId: doc.data().messageId,
-						text: doc.data().text,
-						pageId: id,
-					};
-				});
-				dispatch(fetch_messages(messageData));
-			});
-	}, []);
 
 	const onTrash_click = (message) => {
 		// ----画面上からmessage消す------//
@@ -149,38 +137,47 @@ export default function Chat() {
 		<div className="COLOR_POSITION" style={{ height: "150vh" }}>
 			<div className="ENTIRE_DIV">
 				<H3>Chat</H3>
-				{messages.map((message) => {
-					return (
-						<MESSAGE_BOX key={message.messageId}>
-							<MESSAGE_INNER>
-								<IMG_TEXT_WRAPPER>
-									<div>
-										<img src={avatar} width="50" height="50" />
+				{thisAsk &&
+					thisAsk.map((mappedAsk) => {
+						return <ASKTITLE> {mappedAsk.title} </ASKTITLE>;
+					})}
+				{thisAskMessages &&
+					thisAskMessages.map((thisAskMessage) => {
+						return (
+							<MESSAGE_BOX key={thisAskMessage.messageId}>
+								<MESSAGE_INNER>
+									<IMG_TEXT_WRAPPER>
+										<div>
+											<img src={avatar} width="50" height="50" />
+										</div>
+
+										<TEXT_BOX>
+											<span>
+												<NAME
+													onClick={() =>
+														onUser_click(thisAskMessage.displayName)
+													}
+												>
+													{thisAskMessage.displayName}
+												</NAME>
+											</span>
+											<TEXT> {thisAskMessage.text} </TEXT>
+											{messageTime(thisAskMessage)}
+										</TEXT_BOX>
+									</IMG_TEXT_WRAPPER>
+
+									<div style={{ textAlign: "center" }}>
+										<DeleteTwoToneIcon
+											color="action"
+											style={{ height: "50px" }}
+											onClick={() => onTrash_click(thisAskMessage)}
+										/>
 									</div>
-
-									<TEXT_BOX>
-										<span>
-											<NAME onClick={() => onUser_click(message.displayName)}>
-												{message.displayName}
-											</NAME>
-										</span>
-										<TEXT> {message.text} </TEXT>
-										{messageTime(message)}
-									</TEXT_BOX>
-								</IMG_TEXT_WRAPPER>
-
-								<div style={{ textAlign: "center" }}>
-									<DeleteTwoToneIcon
-										color="action"
-										style={{ height: "50px" }}
-										onClick={() => onTrash_click(message)}
-									/>
-								</div>
-							</MESSAGE_INNER>
-							<hr style={{ borderTop: "1px solid #756e57" }} />
-						</MESSAGE_BOX>
-					);
-				})}
+								</MESSAGE_INNER>
+								<hr style={{ borderTop: "1px solid #756e57" }} />
+							</MESSAGE_BOX>
+						);
+					})}
 
 				<SendField />
 				<BUTTON_POSITION>
