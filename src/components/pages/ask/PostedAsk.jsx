@@ -62,8 +62,6 @@ export default function PostedAsk() {
 		<CONTAINER>
 			{asks &&
 				asks.map((ask) => {
-					console.log(asks)
-					console.log(ask)
 					return (
 						<ASK_BOX key={ask.askId}>
 							<TITLE onClick={() => onTitle_click(ask.askId)}>
